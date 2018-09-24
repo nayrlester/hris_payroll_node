@@ -20,7 +20,7 @@ HRIS with Payroll management created in node,express,mysql
     ```
 
 
-## AppBox CMS
+## Running the Server
 
-1. Make sure you have the appbox server started.
+1. Make sure you have the app started.
 2. Open your browser and enter http://localhost:8080
