@@ -1,0 +1,59 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Tax Table <button class="btn btn-outline-success" onclick="addtax()"><i class="icon-plus3"></i></button></h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th style="text-align: center;">TAXABLE INCOME PER YEAR</th>
+                                            <th style="text-align: center;">INCOME TAX RATE</th>
+                                            <th style="text-align: center;">Action</th>
+                                        </tr >
+                                    </thead>
+                                    <tbody>
+                                       <% var i = 1; row.forEach(function(row){  %>
+                                        <tr>
+                                            <td><%- i++ %></td>
+                                            <td><%- row.start %> - <%- row.end %></td>
+                                            <% if (row.add_ons == 0.00){ %>
+                                            <td><%- row.excess * 100 %>% of the excess over <%- row.add_ons %></td>
+                                            <% }else{ %>
+                                            <td>P <%- row.add_ons * 100 %> + <%- row.excess * 100 %>% of the excess over <%- row.add_ons %></td>
+                                            <% } %>
+                                            <td>
+                                               <button class="btn btn-outline-info" onclick="edittax('<%- row.id %>')"><i class="icon-edit"></i></button> 
+                                               <button class="btn btn-outline-danger" onclick="deletetax('<%- row.id %>')"><i class="icon-trash"></i></button>  
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

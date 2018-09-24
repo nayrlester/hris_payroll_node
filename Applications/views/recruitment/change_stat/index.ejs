@@ -1,0 +1,62 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+
+<script>
+	function updateChangeStat(id)
+	{
+	  $('#rowid').val(id);
+	  $('#updateRegModal').modal('show');
+	  $('.modal-title').text('Update Employment Status');
+	} 
+</script>
+
+<div class="modal fade text-xs-left" id="updateRegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/updateChangeStat" novalidate>
+	  	<input type="hidden" name="rowid" id="rowid">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+			<select  class="form-control" name="description" id="description" required>
+				<option disabled selected>Select Employment Status</option>
+				<% stat.forEach(function (user) { %>
+				 	<option value="<%= user.id%>"><%= user.description %></option>
+				 <% })%>
+			</select>
+			<div class="form-control-position">
+			    <i class="icon-list"></i>
+			</div>
+		</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<% include ../../layout/foot.ejs %>

@@ -1,0 +1,60 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">PagIbig Contribution Table <button class="btn btn-outline-success" onclick="addpagibig()"><i class="icon-plus3"></i></button></h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th rowspan="2">#</th>
+                                            <th rowspan="2" style="text-align: center;">RANGE OF COMPENSATION</th>
+                                            <th colspan="2" style="text-align: center;">Percentage of Monthly Compensation</th>
+                                            <th rowspan="2" style="text-align: center;">Action</th>
+                                        </tr >
+                                        <tr>
+                                            <th style="text-align: center;">Employee Share</th>
+                                            <th style="text-align: center;">Employer Share</th>
+                                        </tr >
+                                    </thead>
+                                    <tbody>
+                                       <% var i = 1; row.forEach(function(row){ if (row.end == 999999.00){ var sal= 'over';}else{var sal = row.end;} %>
+                                        <tr>
+                                            <td><%- i++ %></td>
+                                            <td><%- row.start %> - <%- sal %></td>
+                                            <td><%- row.contribution * 100 %>%</td>
+                                            <td><%- row.employer * 100 %>%</td>
+                                            <td>
+                                               <button class="btn btn-outline-info" onclick="editpagibig('<%- row.id %>')"><i class="icon-edit"></i></button> 
+                                               <button class="btn btn-outline-danger" onclick="deletepagibig('<%- row.id %>')"><i class="icon-trash"></i></button> 
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

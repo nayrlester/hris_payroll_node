@@ -1,0 +1,62 @@
+
+
+    <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+              <div class="content-header row">
+              </div>
+              <div class="content-body">
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title">Employee List
+                                </h4>
+                                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                  <div class="heading-elements">
+                                      <ul class="list-inline mb-0">
+                                          <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                          <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                          <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="card-body collapse in">
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered table-striped">
+                                          <thead class="bg-info">
+                                              <tr>
+                                                  <th>#</th>
+                                                  <th>Name</th>
+                                                  <th>Company</th>
+                                                  <th>Job Title</th>
+                                                  <th>Department</th>
+                                                  <th>Work Shift</th>
+                                                  <th>Action</th>
+                                              </tr>
+                                              
+                                          </thead>
+                                          <tbody>
+                                                <% var i = 1; row.forEach(function(row){ %>
+                                                <tr>
+                                                    <td><%- i++ %></td>
+                                                    <td><%- row.fullname %></td>
+                                                    <td><%- row.client_name %></td>
+                                                    <td><%- row.job_title %></td>
+                                                    <td><%- row.description %></td>
+                                                    <td><%- row.shift_name %></td>
+                                                    <td>
+                                                    <a href="/rec_candidate_info?id=<%= row.candidate_id %>" class="btn btn-outline-info"><i class="icon-eye"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        

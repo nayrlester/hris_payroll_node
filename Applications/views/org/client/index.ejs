@@ -1,0 +1,52 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+<script>
+	function addClient(){
+	  	$('#addClient').modal('show');
+		$('.modal-title').text('Add New Client');
+	}
+</script>
+
+<div class="modal fade text-xs-left" id="addClient" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="addNewClient" method="post" action="/addClient" novalidate>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="text" class="form-control" id="desc" name="desc" placeholder="Description" required>
+			<div class="form-control-position">
+			    <i class="icon-list"></i>
+			</div>
+		</fieldset>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-outline-primary">Save changes</button>
+	  </div>
+	</div>
+	</form>
+  </div>
+</div>
+<% include ../../layout/foot.ejs %>

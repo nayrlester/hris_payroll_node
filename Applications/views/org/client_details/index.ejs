@@ -1,0 +1,93 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+	
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+<script>
+	$(document).ready(function(){
+		
+		$('#save').hide();
+		$('#update_data').click(function(){
+			$('#contract_start').removeAttr('readonly').prop('type', 'date');;
+			$('#contract_end').removeAttr('readonly').prop('type', 'date');;
+			$('#client_name').removeAttr('readonly');
+			$('#contact_person').removeAttr('readonly');
+			$('#position').removeAttr('readonly');
+			$('#contact_num').removeAttr('readonly');
+			$('input[type=checkbox]').removeAttr('disabled');
+			$('input[type=radio]').removeAttr('disabled');
+			$('#add').removeAttr('readonly');
+			$('#update_data').hide();
+			$('#save').show();
+		});
+
+		$('#save').click(function(){
+			
+			var company = $('#client_name').val();
+			var contract_start = $('#contract_start').val();
+			var contract_end = $('#contract_end').val();
+			var contact_person = $('#contact_person').val();
+			var position = $('#position').val();
+			var contact_num = $('#contact_num').val();
+			var _add = $('#add').val();
+			var client_id = $('#client_id').val();
+			var statutory_sched = $('input[name=statutory_sched]:checked').val();
+			var sss_deduc_basis = $('input[name=sss_deduc_basis]:checked').val();
+			var sss_cola = $('input[name=sss_cola]:checked').val();
+			var sss_sea = $('input[name=sss_sea]:checked').val();
+			var sss_ctpa = $('input[name=sss_ctpa]:checked').val();
+			var ph_deduc_basis = $('input[name=ph_deduc_basis]:checked').val();
+			var ph_cola = $('input[name=ph_cola]:checked').val();
+			var ph_sea = $('input[name=ph_sea]:checked').val();
+			var ph_ctpa = $('input[name=ph_ctpa]:checked').val();
+			var wtax_sched = $('input[name=wtax_sched]:checked').val();
+			var wtax_deduc_basis = $('input[name=wtax_deduc_basis]:checked').val();
+
+			var post_url = '/updateclientInfo';
+			var data = {company:company,contract_start:contract_start,contract_end:contract_end,contact_person:contact_person,position:position,contact_num:contact_num,_add:_add,client_id:client_id,statutory_sched:statutory_sched,sss_deduc_basis:sss_deduc_basis,sss_cola:sss_cola,sss_sea:sss_sea,sss_ctpa:sss_ctpa,ph_deduc_basis:ph_deduc_basis,ph_cola:ph_cola,ph_sea:ph_sea,ph_ctpa:ph_ctpa,wtax_sched:wtax_sched,wtax_deduc_basis:wtax_deduc_basis};
+
+        	$.ajax({
+	            type: "POST",
+	            url: post_url,
+	            data: data,
+	            cache:false,
+	            success: function(result){
+	              if (result == 'success') {
+	              	  Swal({
+			              title: 'Success!',
+			              text: 'Client Info Updated',
+			              type: 'success',
+			          }).then(function() {
+			              window.location.href =
+			              "http://" +
+			              window.location.host +"/org_client/"+client_id;
+			          })
+	              }else{
+	              	Swal({
+			              title: 'warning!',
+			              text: 'Error! Contact the Admin',
+			              type: 'warning',
+			          })
+	              }
+	              
+	            }
+	        });
+		});
+
+	});
+</script>
+
+<% include ../../layout/foot.ejs %>

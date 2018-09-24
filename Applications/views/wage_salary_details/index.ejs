@@ -1,0 +1,33 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+<% include ../layout/footer.ejs %>
+
+<% include ../layout/foot.ejs %>
+<script>
+
+    $("#btn-search").click(function () {
+        var daterange = $("#daterange").val()
+        var clientId = $("#clientid").val()
+        window.open("/payroll-print-details?daterange="+daterange+"&clientId="+clientId+"&type=1", '_blank');
+    })
+    $("#btn-excel").click(function () {
+        var daterange = $("#daterange").val()
+        var clientId = $("#clientid").val()
+        window.open("/payroll-print-details?daterange="+daterange+"&clientId="+clientId+"&type=2", '_blank');
+    })
+
+</script>

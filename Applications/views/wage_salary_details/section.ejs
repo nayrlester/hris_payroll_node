@@ -1,0 +1,50 @@
+<div class="app-content content container-fluid">
+        <div class="content-wrapper">
+          <div class="content-header row">
+          </div>
+          <div class="content-body">
+              <div class="row">
+                  <div class="col-xs-12">
+                      <div class="card">
+                            <div class="card-block">
+                                    <h4 class="card-title">Select Date Range</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <input type="text" name="daterange" value = "<%- daterange %>" class="form-control" id="daterange" required /> 
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                  </div>
+                           <% if(user.user_role == 1) { %>  
+                          <div class="card-block">
+                                <h4 class="card-title">Select Client</h4>
+                                <fieldset class="form-group position-relative has-icon-left mb-1">
+                                    <select class = "form-control" id="clientid" name = "clientId">
+                                        <option value = "">-- Select Client --</option>
+                                        <% client.forEach(function(rows){ %>
+                                            <option value = "<%- rows.id %>" "<%-(rows.id === clientId) ? 'selected' : ''%>"><%- rows.client_name %></option>
+                                        <% }) %>
+                                    </select>  
+                                    <div class="form-control-position">
+                                        <i class="icon-department"></i>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <% } %>  
+                            <div class="card-block">
+                                    <button id="btn-search" class="btn btn-primary text-right">Print</button>
+                                    <button id="btn-excel" class="btn btn-primary text-right">Excel</button>
+                                </div>
+                      
+                          <div class="card-body collapse in">
+                              <div class="table-responsive">
+                                 
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    

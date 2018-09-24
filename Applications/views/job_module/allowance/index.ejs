@@ -1,0 +1,151 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+
+<script>
+	function updateAllowance(id)
+	{
+	  $('#rowid').val(id);
+	  $('#updateRegModal').modal('show');
+		$('.modal-title').text('Update Allowance Name');
+		
+		  $.ajax({
+				type:"get",
+				url:"/allowance_by_id?id="+id,
+				cache:false,
+				success:function(data){
+
+					data.forEach(function(row) { 
+						var allowance_name = JSON.stringify(row.description);
+						var amount = JSON.stringify(row.amount);
+
+						$('#allowance_name').val(allowance_name.replace(/\"/g, ""));
+						$('#amount').val(amount.replace(/\"/g, ""));
+					});	
+				}	
+			});
+	} 
+
+	function deleteAllowance(id)
+	{
+	  $('#rowid_del').val(id);
+	  $('#AllowanceModal_delete').modal('show');
+	  $('.modal-title').text('Delete Allowance Name');
+	} 
+
+	function addAllowance(){
+
+	  $('#AllowanceModal_add').modal('show');
+	  $('.modal-title').text('Add Allowance');
+
+	}
+
+</script>
+
+<div class="modal fade text-xs-left" id="updateRegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/updateAllowance" novalidate>
+	  	<input type="hidden" name="rowid" id="rowid">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="allowance_name" name="allowance_name" placeholder="Allowance Name" required>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="number" class="form-control" id="amount" name="amount" placeholder="Amount" required>
+				<div class="form-control-position">
+				    <i class="icon-money"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="AllowanceModal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/addAllowance" novalidate>
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="allowance_name" name="allowance_name" placeholder="Allowance Name" required>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="number" class="form-control" id="amount" name="amount" placeholder="Amount" required>
+				<div class="form-control-position">
+				    <i class="icon-money"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="AllowanceModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="deleteAllowance" method="post" action="/deleteAllowance" novalidate>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+  		<input type="hidden" name="rowid_del" id="rowid_del">
+		<p>
+			Are you sure you want to delete Allowance?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-outline-primary">Delete</button>
+	  </div>
+	</div>
+	</form>
+  </div>
+</div>
+<% include ../../layout/foot.ejs %>

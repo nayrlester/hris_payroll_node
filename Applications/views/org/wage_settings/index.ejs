@@ -1,0 +1,429 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+
+<script>
+    function addWageSettings(id)
+    {
+      $('#rowid').val(id);
+      $('#wageModal_add').modal('show');
+      $('.modal-title').text('Add New Wage Settings');
+      
+    } 
+
+    function deleteWage(id){
+      $('#row_del').val(id),
+      $('#deleteWage').modal('show');
+    $('.modal-title').text('Delete Wage Settings');
+  }
+
+    function updateWage(id)
+    {
+      $('#rowid').val(id);
+      $('#deptModal_update').modal('show');
+      $('.modal-title').text('Update Wage Settings');
+
+      var url = "/getWageDetails/"+id;
+
+      $.ajax({
+       type:"GET",
+       cache:false,
+       url:url,
+       success: function(result){
+          
+          $('#Urate').val(result[0].rate);
+          $('#Ucola').val(result[0].cola);
+          $('#Usea').val(result[0].sea);
+          $('#Uctpa').val(result[0].ctpa);
+       }
+     });
+      
+    } 
+
+    $(document).ready(function(){
+      
+      $('#save_wage').click(function(){
+         var comp_id = $('#rowid').val(),
+         job_title = $('#job_title').val(),
+         rate = $('#rate').val(),
+         cola = $('#cola').val(),
+         sea = $('#sea').val(),
+         ctpa = $('#ctpa').val(),
+         ot = $('#ot').val(),
+         nd = $('#nd').val(),
+         otnd = $('#otnd').val(),
+         lh = $('#lh').val(),
+         lhot = $('#lhot').val(),
+         lhnd = $('#lhnd').val(),
+         lhotnd = $('#lhotnd').val(),
+         sh = $('#sh').val(),
+         shot = $('#shot').val(),
+         shnd = $('#shnd').val(),
+         shotnd = $('#shotnd').val(),
+         rd = $('#rd').val(),
+         lhrdot = $('#lhrdot').val(),
+         shrdot = $('#shrdot').val();
+
+         var data = {comp_id:comp_id,job:job_title,rate:rate,cola:cola,sea:sea,ctpa:ctpa,ot:ot,nd:nd,otnd:otnd,lh:lh,lhot:lhot,lhnd:lhnd,lhotnd:lhotnd,sh:sh,shot:shot,shnd:shnd,shotnd:shotnd,rd:rd,lhrdot:lhrdot,shrdot:shrdot};
+         var url ="/addWageSettings";
+         $.ajax({
+           type:"POST",
+           data:data,
+           cache:false,
+           url:url,
+           success: function(result){
+              if (result == 'success') {
+                  Swal({
+                      title: 'Success!',
+                      text: 'New Wage Added Successfully',
+                      type: 'success',
+                  }).then(function() {
+                      window.location.href =
+                      "http://" +
+                      window.location.host +"/wage_settings/"+comp_id;
+                  })
+              }else{
+                    Swal({
+                      title: 'warning!',
+                      text: 'Error! Contact the Admin',
+                      type: 'warning',
+                  })
+              }
+           }
+         });
+      });
+
+      $('#wageModal_add #deptModal_update').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+        $('#wageModal_add .modal-content').empty();
+      });
+
+    });
+
+  function submitUpdate(){
+     var rowid = $('#rowid').val(),
+     rate = $('#Urate').val(),
+     cola = $('#Ucola').val(),
+     sea = $('#Usea').val(),
+     ctpa = $('#Uctpa').val();
+
+     var url = "/updateWage";
+     var data = {rowid:rowid,rate:rate,cola:cola,sea:sea,ctpa:ctpa};
+     console.log(data)
+
+     $.ajax({
+        method:"POST",
+        url:url,
+        data:data,
+        cache:false,
+        success:function(result){
+            if (result == 'success') {
+                Swal({
+                    title: 'Success!',
+                    text: 'Updated Successfully',
+                    type: 'success',
+                }).then(function() {
+                      setTimeout(function(){
+                        location.reload();
+                      },300);
+                  })
+            }else{
+                  Swal({
+                    title: 'warning!',
+                    text: 'Error! Contact the Admin',
+                    type: 'warning',
+                })
+            }
+        }
+     });
+  }
+  
+  function deleteDetails(){
+      var id = $('#row_del').val();
+
+    $.ajax({
+      method:"POST",
+      url: "/deleteWage",
+      data: {id:id},
+      cache:false,
+      success: function(res){
+        if (res == 'success') {
+                  Swal({
+                  title: 'Success!',
+                  text: 'Wage Settings Deleted Successfully',
+                  type: 'success',
+              }).then(function() {
+                  setTimeout(function(){
+                        location.reload();
+                      },300);
+              })
+              }else{
+                Swal({
+                  title: 'warning!',
+                  text: 'Error! Contact the Admin',
+                  type: 'warning',
+              })
+              }
+            }
+    });
+  }
+
+</script>
+<div class="modal fade text-xs-left" id="deptModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <input type="hidden" name="rowid" id="rowid">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+          <label for="projectinput1">Wage Rate</label>
+          <input type="number" id="Urate" class="form-control" placeholder="Wage Rate" name="rate">
+        </div>
+        <div class="form-group">
+          <label for="projectinput1">COLA</label>
+          <input type="number" id="Ucola" class="form-control" placeholder="COLA" name="cola">
+        </div>
+        <div class="form-group">
+          <label for="projectinput1">SEA</label>
+          <input type="number" id="Usea" class="form-control" placeholder="SEA" name="sea">
+        </div>
+        <div class="form-group">
+          <label for="projectinput1">CTPA</label>
+          <input type="number" id="Uctpa" class="form-control" placeholder="CTPA" name="ctpa">
+        </div>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-outline-primary" onclick="submitUpdate()">Save changes</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<div class="modal fade text-xs-left" id="wageModal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog  modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <input type="hidden" name="rowid" id="rowid">
+            <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 col-sm-12">
+                
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <select  class="form-control" name="job_title" id="job_title" required>
+                      <option disabled selected>Select Job Title</option>
+                      <% job.forEach(function (user) { %>
+                          <option value="<%= user.id%>"><%= user.job_title %></option>
+                        <% })%>
+                    </select>
+                    <div class="form-control-position">
+                        <i class="icon-briefcase"></i>
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="number" name="rate" id="rate" required class="form-control" placeholder="Wage Rate">
+                    <div class="form-control-position">
+                        <i class="icon-money"></i>
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="number" name="cola" id="cola" required class="form-control" placeholder="COLA">
+                    <div class="form-control-position">
+                        <i class="icon-money"></i>
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="number" name="sea" id="sea" required class="form-control" placeholder="SEA">
+                    <div class="form-control-position">
+                        <i class="icon-money"></i>
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="number" name="ctpa" id="ctpa" required class="form-control" placeholder="CTPA">
+                    <div class="form-control-position">
+                        <i class="icon-money"></i>
+                    </div>
+                  </fieldset>
+                </div>
+              
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="ot" id="ot" required class="form-control" value="<%= ot_set[0].ot%>" disabled placeholder="OT">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="nd" id="nd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="otnd" id="otnd" required class="form-control" value="<%= ot_set[0].ot_nd%>" disabled placeholder="OT - ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+                
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="lh" id="lh" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="Legal Holiday">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="sh" id="sh" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="Special Holiday">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="lhot" id="lhot" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="LH OT">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="lhnd" id="lhnd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="LH ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="lhotnd" id="lhotnd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="LH OT-ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="shot" id="shot" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="SH OT">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="shnd" id="shnd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="SH ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+        
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="shotnd" id="shotnd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="SH OT-ND">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="rd" id="rd" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="Rest Day">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="lhrdot" id="lhrdot" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="LH RDOT">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <fieldset class="form-group position-relative has-icon-left mb-1">
+                    <input type="hidden" name="shrdot" id="shrdot" required class="form-control" value="<%= ot_set[0].nd%>" disabled placeholder="SH RDOT">
+                    <div class="form-control-position">
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary" id="save_wage">Submit</button>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="deleteWage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" name="row_del" id="row_del">
+    <p>
+      Are you sure you want to delete Contribution?
+    </p>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-outline-primary" onclick="deleteDetails()">Delete</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<% include ../../layout/foot.ejs %>

@@ -1,0 +1,279 @@
+
+<% include ../../layout/header.ejs %>
+<link rel="stylesheet" type="text/css" href="/app-assets/css/pro-bars.min.css">
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+  <div id="overlay">
+  <div id="progstat"></div>
+  <div id="progress"></div>
+  </div>
+
+  <div id="container">
+    <div class="app-content content container-fluid" >
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Recruitment - Candidate Information</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="pro-bar bar-20 color-peter-river animated" id="progress-bar" data-pro-bar-percent="20" data-pro-bar-delay="200" style="width: 20%; overflow: hidden;">
+                            <div class="pro-bar-candy candy-rtl"></div>
+                            </div>
+                            <div class="card-block">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="active-tab" data-toggle="tab" href="#" aria-controls="active" aria-expanded="true">Personal Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="link-tab1"  href="#" aria-controls="link" aria-expanded="false">Education</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="link-tab2"  href="#" aria-controls="linkOpt">Work Experience</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="link-tab3"  href="#" aria-controls="linkOpt">Skills</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="link-tab4"  href="#" aria-controls="linkOpt">Character Referrence</a>
+                                    </li>
+                                </ul>
+                                <form class="form-horizontal form-simple" method="post" id="addCandidate_form" novalidate enctype="multipart/form-data" >
+                                <div class="tab-content px-1 pt-1">
+                                    <div role="tabpanel" class="tab-pane fade active in" id="personal_info" aria-labelledby="active-tab" aria-expanded="true">
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+
+                                                    <div class="form-group">
+                                                      <div class="col-md-3 col-lg-3">
+                                                         <img id="imgid" class="profile-user-img img-responsive" style="width: 212px!important;height: 200px!important;" src="../../app-assets/images/logo/1.jpg" alt="User profile picture">
+                                                          <h3 class="profile-username text-c>Picture 2 x 2</h3>">
+                                                          <span class="btn btn-success btn-block btn-file">
+                                                              Browse <input type="file" name="profile_img" id="image" accept="image/*" required="required" onchange="loadFile(event)" >
+                                                          </span>
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">First Name</label>
+                                                           <input type="text" class="form-control" required="required" name="fname" id="fname" placeholder="First Name" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Middle Name</label>
+                                                           <input type="text" class="form-control" required="required" name="mname" id="mname" placeholder="Middle Name" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Last Name</label>
+                                                           <input type="text" class="form-control" required="required" name="lname" id="lname" placeholder="Last Name" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Gender</label>
+                                                              <select class="form-control" required="required" name="gender" id="gender" placeholder="Marital Status"> 
+                                                              <option disabled selected>Select Gender</option>
+                                                              <option value="Male">Male</option>
+                                                              <option value="Female">Female</option>
+                                                              </select>
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Email</label>
+                                                           <input type="email" class="form-control" required="required" name="email" id="email" placeholder="Email" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Religion</label>
+                                                           <input type="text" class="form-control" required="required" name="ethnic" id="ethnic" placeholder="Religion" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Marital Status</label>
+                                                              <select class="form-control" required="required" name="marital_status" id="marital_status" placeholder="Marital Status"> 
+                                                              <option disabled selected>Select Status</option>
+                                                              <option value="1">Single</option>
+                                                              <option value="2">Widowed</option>
+                                                              <option value="3">Married</option>
+                                                              <option value="4">Divorced</option>
+                                                              </select> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Contact Number</label>
+                                                           <input type="number" class="form-control" required="required" name="contact_num" id="contact_num" placeholder="Contact Number" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Age</label>
+                                                           <input type="number" class="form-control" required="required" name="age" id="age" placeholder="Age" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3 position-relative has-icon-left">
+                                                           <label for="projectinput1">BirthDate</label>
+                                                            <div class="position-relative has-icon-left">
+                                                              <input type="date" name="bdate" id="bdate" class="form-control">
+                                                              <div class="form-control-position">
+                                                                <i class="icon-calendar5"></i>
+                                                              </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-lg-12">
+                                                           <label for="projectinput1">Address</label>
+                                                           <input type="text" class="form-control" required="required" name="address" id="address" placeholder="Street Address" > 
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6">
+                                                           <label for="projectinput1">City</label>
+                                                           <input type="text" class="form-control" required="required" name="city" id="city" placeholder="City Address" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Country</label>
+                                                           <input type="text" class="form-control" required="required" name="country" id="country" placeholder="Country" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Zipcode</label>
+                                                           <input type="text" class="form-control" required="required" name="zipcode" id="zipcode" placeholder="Zipcode" > 
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                         <button type="button" onclick="add_educ()" class="btn btn-success pull-right">Add Education</button>
+                                        <div class="form" id="educ">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12" >
+                                                        <div class="form-group">
+                                                          <div class="col-md-3 col-lg-3">
+                                                              <label for="projectinput1">Education</label>
+                                                              <select class="form-control" required="required" name="educational_attainment[]" id="educational_attainment"> 
+                                                              <option disabled selected>Select Educational Attainment</option>
+                                                              <option value="Primary">Primary</option>
+                                                              <option value="Secondary">Secondary</option>
+                                                              <option value="Tertiary">Tertiary</option>
+                                                              <option value="Vocational">Vocational</option>
+                                                              <option value="Masteral">Masteral</option>
+                                                              <option value="Doctorate">Doctorate</option>
+                                                              </select>
+                                                          </div>
+                                                          <div class="col-md-3 col-lg-3">
+                                                             <label for="projectinput1">Address</label>
+                                                             <input type="text" class="form-control" required="required" name="add[]" id="add" placeholder="Address"  > 
+                                                          </div>
+                                                          <div class="col-md-3 col-lg-3">
+                                                             <label for="projectinput1">Date Graduated</label>
+                                                             <input type="date" class="form-control" required="required" name="grad_date[]" id="grad_date" placeholder="Date Graduated" > 
+                                                          </div>
+                                                          <div class="col-md-3 col-lg-3">
+                                                             <label for="projectinput1">School/Institution</label>
+                                                             <input type="text" class="form-control" required="required" name="school_name[]" id="school_name" placeholder="School" > 
+                                                          </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="work" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false">
+                                         <button type="button" onclick="add_exp()" class="btn btn-success pull-right">Add Experience</button>
+                                        <div class="form" id="experience">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Company</label>
+                                                           <input type="text" class="form-control" required="required" name="comp_name[]" id="comp_name" placeholder="Company" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Position</label>
+                                                           <input type="text" class="form-control" required="required" name="position[]" id="position" placeholder="Position" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">From *Note:(month - year)</label>
+                                                           <input type="text" class="form-control" required="required" name="from[]" id="from" placeholder="From" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">To *Note:(month - year)</label>
+                                                           <input type="text" class="form-control" required="required" name="to[]" id="to" placeholder="To" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">Reason for leaving</label>
+                                                           <input type="text" class="form-control" required="required" name="reason[]" id="reason" placeholder="Reason for Leaving" > 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="skill" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false">
+                                         <button type="button" onclick="add_skills()" class="btn btn-success pull-right">Add Skills</button>
+                                        <div class="form" id="skills">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Skills</label>
+                                                           <input type="text" class="form-control" required="required" name="skill[]" id="skill" placeholder="Skills" > 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="referrence" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false" >
+                                         <button type="button" onclick="add_ref()" class="btn btn-success pull-right">Add Referrence</button>
+                                        <div class="form">
+                                            <div class="form-body" id="referrence">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Name</label>
+                                                           <input type="text" class="form-control" required="required" name="rfname[]" id="rfname" placeholder="Name" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Position</label>
+                                                           <input type="text" class="form-control" required="required" name="rposition[]" id="rposition" placeholder="Position" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Company</label>
+                                                           <input type="text" class="form-control" required="required" name="rcomp[]" id="rcomp" placeholder="Company" > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Contact Number</label>
+                                                           <input type="text" class="form-control" required="required" name="rcontact[]" id="rcontact" placeholder="Contact Number" > 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-footer pull-right" align="right" id="button">
+                          <button class="btn btn-warning" id="prev" onclick="prev()">Prev</button>
+                          <button class="btn btn-success" id="next" onclick="next()">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% include ../../layout/footer.ejs %>
+<script src="/app-assets/js/visible.min.js" type="text/javascript"></script>
+<script src="/app-assets/js/pro-bars.js" type="text/javascript"></script>
+<script src="/app-assets/js/addCandidate.js" type="text/javascript"></script>
+<% include ../../layout/foot.ejs %>

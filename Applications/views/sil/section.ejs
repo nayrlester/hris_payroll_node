@@ -1,0 +1,66 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Service Incentive Leave </h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th>Contract Start</th>
+                                            <th>Contract End</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) {%>
+                                        <tr>
+                                            <th scope="row"><%= i++ %></th>
+                                            <td><%= user.emp_id %></td>
+                                            <td><%= user.fname %> <%= user.mname %><%= user.lname %></td>
+                                            <td><%= dateFormat(user.contract_start, "isoDate" ) %></td>
+                                            <td><%= dateFormat(user.contract_end, "isoDate" ) %></td>
+                                            <!-- <% 
+                                            var now = new Date(); 
+                                            var week = now.getTime(user.contract_end) - 1000*60*60*24*7;
+                                            var month = now.getTime(user.contract_end) - 1000*60*60*24*30;
+                                            %> -->
+                                            <!-- <% if(dateFormat(month, "isoDate" )  <= dateFormat(week, "isoDate" )){ %>
+                                            <td>Warning</td>
+                                            <% }else if (dateFormat(user.contract_end, "isoDate" )  <= dateFormat(now, "isoDate" )){ %>
+                                            <td>Danger</td>
+                                            <% }else{%> -->
+                                            <!-- <% }%> -->
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

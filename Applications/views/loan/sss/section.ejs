@@ -1,0 +1,71 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Loans - Social Security System<button class="btn btn-outline-success" onclick="addLoanSss()"><i class="icon-plus3"></i></button></h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table id="table" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                                    <thead class="bg-success">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Loan/CA Date</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th>Month to Pay</th>
+                                            <th>Term</th>
+                                            <th>Monthly Payment</th>
+                                            <th>Loan Amount</th>
+                                            <th>Total Amount Paid</th>
+                                            <th>Date Start</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) { %>
+                                        <tr>
+                                            <th scope="row"><%= i++ %></th>
+                                            <td><%= dateFormat(user.date_created, "isoDate" ) %></td>
+                                            <td><%= user.emp_id %></td>
+                                            <td><%= user.fullname %></td>
+                                            <td><%= user.months_to_pay %></td>
+                                            <td><%= user.term %></td>
+                                            <td><%= user.monthly_payment %></td>
+                                            <td><%= user.loan_amount %></td>
+                                            <td><%= user.total_dep %></td>
+                                            <td><%= dateFormat(user.date_created, "isoDate" ) %></td>
+                                            <td><%= user.loan_status %></td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-success" data-toggle="modal" onclick="view_details('<%= user.id %>')"><i class="icon-eye"></i></button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

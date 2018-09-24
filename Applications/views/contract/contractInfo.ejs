@@ -1,0 +1,187 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+
+    <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+              <div class="content-header row">
+              </div>
+              <div class="content-body">
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title"> Print Contract 
+                                    <button class="btn btn-primary" onclick="printContract(<%= result[0].id%>)"><i class="icon-print"></i></button>
+                                  </h4>
+                                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                  <div class="heading-elements">
+                                      <ul class="list-inline mb-0">
+                                          <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                          <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                          <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="card-body collapse in">
+                                  <div class="row">
+                                    <div class="col-lg-12 col-xl-12">
+                                      <div class="card-block">
+                                          <table align="right">
+                                              <tr>
+                                              <td >
+                                              <img class="img-responsive" style="width:auto!important;height: 50px; " align="right" src="/app-assets/images/logo/logo1.png">
+                                              <img class="img-responsive" style="width:auto!important;height: 50px; " align="right" src="/app-assets/images/logo/logo.png">
+                                              </td>
+                                              </tr>
+                                              </table>
+                                              <table>
+                                              <tr>
+                                              <td><h4><b><%= dateFormat("fullDate")  %></b></h4></td>
+                                              </tr>
+                                              </table>
+                                              <table>
+                                              <tr>
+                                              <td><h3 style="font-size: 14px;"><%= result[0].fullname%></h3></td>
+                                              </tr>
+                                              <tr>
+                                              <td><h3 style="font-size: 14px;">Address: <%= result[0].address%></h3></td>
+                                              </tr>
+                                              </table>
+
+                                              <table >
+                                              
+                                              <tr>
+                                              <td align="center"><h3 style="font-size: 14px;">Re&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <b>JOB OFFER MANAGERIAL AND CONFIDENTIAL EMPLOYEES</b></h3></td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                              
+                                              <h3 style="font-size: 14px;">Dear <b>Mr/Ms.</b>  <u><%= result[0].fullname%></u>,</h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                              <h3 style="font-size: 14px;">
+                                              GREEN PASTURE RECRUITMENT AGENCY INCORPORATED ("GREEN PASTURE") is pleased to offer you the job as (<b><%= result[0].job_title%></b>). We trust that your knowledge, skills and experience will be among our most valuable assets. </h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                              <h3 style="font-size: 14px;">
+                                              Should you accept this job, per company policy, you&quot;ll be eligible to receive the following remuneration and benefits upon your hiring date on (<b><%= dateFormat(result[0].contract_start, 'isoDate' )  %></b>).</h3>
+                                                  
+                                              </td> 
+                                              </tr>
+                                              </table>
+                                              
+                                              <table width="100%">
+                                              <tr>
+                                              <td>
+                                                <table>
+                                                <h3 style="font-size: 14px;">
+                                                <tr>
+                                                  <td width="45%">
+                                                  RATE :
+                                                  </td>
+                                                  <td  align="center" width="10%">:</td>
+                                                  <td width="45%"  align="left">Php <%= rate[0].rate%></td>
+                                                </tr>
+                                                <tr>
+                                                </tr>
+                                                <tr>
+                                                  <td><h5>BENEFITS</h5></td>
+                                                </tr>
+                                                
+                                                  <% var i = 1; benefits.forEach(function(row){ %>
+                                                  <tr>
+                                                    <td>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%- i++ %>. <%- row.benefits %>
+                                                    </td>
+                                                    <td  align="center">:</td>
+                                                    <td  align="left"> </td>
+                                                  </tr>
+                                                  <% }) %>
+                                                <tr>
+                                                </h3>
+                                                </table>
+                                              </td>
+                                              </tr>
+                                              </table>
+                                              <table>
+                                              
+                                              
+                                              <tr>
+                                              <td>
+                                              <h3 style="font-size: 14px;">
+                                              In addition to the aforementioned, you shall be entitled to all other government mandated benefits under the Social Security System (SSS), PhilHealth and Pag-ibig.</h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                             
+                                              <h3 style="font-size: 14px;">
+                                              Prepared / Approved by:</h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                              
+                                              <h3>MICHAEL G. RAZAL</h3>
+                                              <br>
+                                              <h3 style="font-size: 14px;">Managing Director</h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                                <h3 style="font-size: 14px;">Noted by:</h3>
+                                              </td>
+                                              </tr>
+                                              <tr>
+                                              <td>
+                                              <h3>YU MING CHIN</h3>
+                                              <br>
+                                               <h3 style="font-size: 14px;">President</h3>
+                                              </td>
+                                              </tr>
+                                              </table>
+                                              <table width="100%" >
+                                              <tr>
+                                              <td width="70%"></td>
+                                              <td width="30%"><h3 style="font-size:14px;">CONFORME:</h3></td>
+                                              </tr>
+                                              <tr>
+                                              <td align="right"></td>
+                                              <td><b><h3><%= result[0].fullname %></h3></b></td>
+                                              </tr>
+                                              </table>
+                                          </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        
+
+</div>
+<% include ../layout/footer.ejs %>
+<script>
+  function printContract(id){
+    window.open('http://localhost:8080/contractPrint/'+ id);
+  }
+</script>
+<% include ../layout/foot.ejs %>

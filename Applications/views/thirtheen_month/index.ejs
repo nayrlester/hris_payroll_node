@@ -1,0 +1,48 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+
+<% include ../layout/foot.ejs %>
+
+<script>
+    $(document).ready(function(){
+      $("#13_month").click(function() {
+        var year = ($("#date").val());
+              var company = $("#pclient").val();
+              var obj = {year: year, client: company};
+              $.get('/13-month-pay', obj, function(data) {
+                var tbl = $("#employee >tbody");
+                tbl.empty();
+                data.forEach(element => {
+                    tbl.append('<tr> <td>'+element.client_name+'</td><td>'+accounting.formatMoney(element.gross, '')+'</td></tr>');
+                });
+              });
+      })
+      $("#print").click(function() {
+        var date_range = ($("#date").val())
+              var company = $("#pclient").val();
+             var obj = {year: date_range, client: company};
+              var pathname = 'http://localhost:8080/generate_pay?year='+obj.year+'&client='+obj.client
+              window.open(pathname, '_blank');
+      })
+      
+
+
+    });
+</script>

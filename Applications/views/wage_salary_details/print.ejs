@@ -1,0 +1,408 @@
+<style>
+    table {border-collapse:collapse}
+    #append td{
+        font-size: 7px;
+        border-bottom: 1pt solid black;
+    }
+    #append th{
+        font-size: 7px;
+    }
+
+</style>
+  <img width = "200px" height = "100px" src = "../../../app-assets/images/logo/logo1.png"><br>
+Payroll History Detail <br>
+Date Between: <%- daterange %> 
+<table id = "append">
+    <tr>
+        <th>
+            Full Name
+        </th>
+        <th>
+            Daily Rate
+        </th>
+        <th>
+            Cola
+        </th>
+        <th>
+            Hours
+        </th>
+        <th>
+            Days
+        </th>
+        <th>
+            Basic
+        </th>
+        <th>
+            Cola Amt
+        </th>
+        <th>
+            Total Salary
+        </th>
+        <%  Object.keys(rate).forEach(function(key){ 
+            var obj = rate[key]%>
+            <th colspan = 2>
+                <%- obj.text %> 
+            </th>
+        <% }) %>
+        <th colspan = 2>
+            Total OT
+        </th>
+        <th>
+            Gross Amt
+        </th>
+        <th>
+            SSS
+        </th>
+        <th>
+            PHIC
+        </th>
+        <th>
+            HDMF
+        </th>
+        <th>
+            WTax
+        </th>
+        <th>
+            Payroll Adj.
+        </th>
+        <th>
+            Total Ded
+        </th>
+        <th>
+            CA/Loan
+        </th>
+        <th>
+            Net Pay
+        </th>
+    </tr>
+    <tr>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <%  Object.keys(rate).forEach(function(key){ %>
+                <th>
+                    H
+                </th>
+                <th>
+                    A
+                </th>
+            <% }) %>
+            <th>
+                
+            </th>
+            <th>
+               
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+       
+</table>
+</br>
+</br>
+<table id = "add">
+    <tr>
+        <td width = "10%">Salaries And Wages:</td>
+        <td width = "10%" id = "salary"></td>
+        <td width = "60%"></td>
+        <td width = "10%" style="font-weight: bold">Employer:</td>
+        <td width = "10%"></td>
+    </tr>
+    <tr>
+            <td width = "10%">W Tax Payable:</td>
+            <td width = "10%" id = "tax"></td>
+            <td width = "60%"></td>
+            <td width = "10%" style="font-weight: bold">SSS:</td>
+            <td width = "10%" id = "emp_sss"></td>
+        </tr>
+        <tr>
+                <td width = "10%">SSS:</td>
+                <td width = "10%" id = "sss"></td>
+                <td width = "60%"></td>
+                <td width = "10%" style="font-weight: bold">ECC:</td>
+                <td width = "10%" >0.00</td>
+            </tr>
+            <tr>
+                    <td width = "10%">Pag-ibig:</td>
+                    <td width = "10%" id = "pagibig"></td>
+                    <td width = "60%"></td>
+                    <td width = "10%" style="font-weight: bold">Pag-ibig:</td>
+                    <td width = "10%" id = "emp_pagibig"></td>
+                </tr>
+                <tr>
+                        <td width = "10%">Philhealth:</td>
+                        <td width = "10%" id = "philhealth"></td>
+                        <td width = "60%"></td>
+                        <td width = "10%" style="font-weight: bold">Philhealth:</td>
+                        <td width = "10%" id = "emp_philhealth"></td>
+                    </tr>
+                    <tr>
+                            <td width = "10%">Cash Advance:</td>
+                            <td width = "10%" id = "cash-advance"></td>
+                            <td width = "60%"></td>
+                            <td width = "10%" style="font-weight: bold"></td>
+                            <td width = "10%"></td>
+                        </tr>
+                        <tr>
+                                <td width = "10%">Accounts Payable:</td>
+                                <td width = "10%"></td>
+                                <td width = "60%"></td>
+                                <td width = "10%" style="font-weight: bold"></td>
+                                <td width = "10%"></td>
+                            </tr>
+                            <tr>
+                                    <td width = "10%">Other Deduction:</td>
+                                    <td width = "10%" id = "other-deductions"></td>
+                                    <td width = "60%"></td>
+                                    <td width = "10%" style="font-weight: bold"></td>
+                                    <td width = "10%"></td>
+                                </tr>
+
+                                <tr>
+                                        <td width = "10%">Cash In Bank:</td>
+                                        <td width = "10%">0.00</td>
+                                        <td width = "60%"></td>
+                                        <td width = "10%" style="font-weight: bold"></td>
+                                        <td width = "10%"></td>
+                                    </tr>
+                                    <tr>
+                                            <td width = "10%">Salary Credit:</td>
+                                            <td width = "10%" id = "salary-credit"></td>
+                                            <td width = "60%"></td>
+                                            <td width = "10%" style="font-weight: bold"></td>
+                                            <td width = "10%"></td>
+                                        </tr>
+</table>
+
+<% include ../layout/footer.ejs %>
+
+
+<% include ../layout/foot.ejs %>
+<script>
+        var query = <%- JSON.stringify(query) %>;
+        var tbl = $("#append tbody")
+        var total_rate = 0
+        var total_salary = 0
+        var total_hours = 0
+        var total_days = 0
+        var total_basic = 0
+        var total_cola = 0
+        var total_rates = {}
+        var _total_ot = 0
+        var total_grss = 0
+        var total_sss = 0
+        var total_philhealth = 0
+        var total_pagibig = 0
+        var total_loan = 0
+        var total_deductions = 0
+        var total_net = 0
+        var total_tax = 0
+        var py_adj = 0
+        var emp_sss = 0;
+        var emp_philhealth = 0;
+        var emp_pagibig = 0;
+        query.forEach(function(element) {
+            var days = element.work_hours / 8
+            var rate = unformat(element.rate)
+            var salary = days * rate
+            total_rate = total_rate + rate
+            total_salary = total_salary + salary
+            total_hours = total_hours + element.work_hours
+            total_days = total_days + days
+            total_cola = total_cola + element.cola
+            var pd = element.payroll_details
+            var body = ` <td>`+element.name+`</td>
+                    <td>`+element.rate+`</td>
+                    <td>`+element.cola+`</td>
+                    <td>`+element.work_hours+`</td>
+                    <td>`+days+`</td>
+                    <td>`+money(salary)+`</td>
+                    <td>`+element.cola+`</td>
+                    <td>`+money(element.cola + salary)+`</td>`
+            var total_ot = 0
+            for (var key in pd) {
+                var row = pd[key]
+                body = body + `<td>`+row.hours+`</td><td>`+money(row.amt)+`</td>`
+                total_ot = total_ot + row.amt
+                if (total_rates[key] == undefined) {
+                    total_rates[key] = {
+                        hours: row.hours,
+                        amt: row.amt
+                    }
+                } else {
+                    total_rates[key] = {
+                        hours: total_rates[key].hours + row.hours,
+                        amt: total_rates[key].amt + row.amt
+                    }
+                }
+            }
+            _total_ot = _total_ot + total_ot
+            body = body + `<td>`+money(total_ot)+`</td>`
+            body = body + `<td></td>`
+            var sss = unformat(element.e_sss) + unformat(element.sss)
+            total_sss = total_sss + sss
+            var phil = unformat(element.phil_health) + unformat(element.e_philhealth)
+            total_philhealth = total_philhealth + phil
+            var pagibig = unformat(element.e_pagibig) + unformat(element.pag_ibig)
+            total_pagibig = total_pagibig + pagibig
+            emp_sss =  unformat(element.sss) + emp_sss;
+            emp_philhealth = unformat(element.e_philhealth) + emp_philhealth;
+            emp_pagibig = unformat(element.pag_ibig) + emp_pagibig;
+            body = body + `<td>`+element.gross+`</td>`
+            total_grss = total_grss + unformat(element.gross)
+            total_loan = total_loan + element.amount
+            body = body + `<td>`+money(sss)+`</td>`
+            body = body + `<td>`+money(phil)+`</td>`
+            body = body + `<td>`+money(pagibig)+`</td>`
+            var tax = unformat(element.add_tax) + unformat(element.tax)
+            total_tax = tax + total_tax
+            var padj = element.cola + salary
+            py_adj = py_adj+padj
+            body = body + `<td>`+money(tax)+`</td>`
+            body = body + `<td>`+money(padj)+`</td>`
+            var deduc = element.e_sss + element.e_philhealth + element.e_pagibig
+            total_deductions = deduc + total_deductions
+            total_loan = total_loan + unformat(element.amount)
+            body = body + `<td>`+money(deduc)+`</td>`
+            body = body + `<td>`+money(element.amount)+`</td>`
+            body = body + `<td>`+element.net+`</td>`
+            total_net = total_net + unformat(element.net)
+            
+            tbl.append(`
+                <tr>
+                   `+body+`
+                </tr>
+            `);
+           
+        })
+
+        var rates = ``
+
+        for (var key in total_rates) {
+                var row = total_rates[key]
+                rates = rates + `<td>`+money(row.hours)+`</td><td>`+money(row.amt)+`</td>`
+            }
+
+        tbl.append(`<tr>
+            <td></td>
+            <td>`+money(total_rate)+`</td>
+          <td>`+money(total_cola)+`</td>
+         <td>`+money(total_hours)+`</td>
+         <td>`+money(total_days)+`</td>
+         <td>`+money(total_salary)+`</td>
+         <td>`+money(total_cola)+`</td>
+         <td>`+money(total_cola + total_salary)+rates+`</td>
+         <td>`+money(_total_ot)+`</td>
+         <td></td>
+         <td>`+money(total_grss)+`</td>
+         <td>`+money(total_sss)+`</td>
+         <td>`+money(total_philhealth)+`</td>
+         <td>`+money(total_pagibig)+`</td>
+         <td>`+money(total_tax)+`</td>
+         <td>`+money(py_adj)+`</td>
+         <td>`+money(total_deductions)+`</td>
+         <td>`+money(total_loan)+`</td>
+         <td>`+money(total_net)+`</td>
+         </tr>`);
+         $("#salary").html(money(total_grss))
+         $("#sss").html(money(total_sss - emp_sss))
+         $("#pagibig").html(money(total_pagibig - emp_pagibig))
+         $("#philhealth").html(money(total_philhealth - emp_philhealth))
+         $("#emp_sss").html(money(emp_sss))
+         $("#emp_pagibig").html(money( emp_pagibig))
+         $("#emp_philhealth").html(money( emp_philhealth))
+
+         $("#cash-advance").html(money(total_loan))
+         $("#other-deductions").html(money(total_deductions))
+         $("#salary-credit").html(money(total_net))
+         
+        function money(money) {
+                return accounting.formatMoney(money, "")
+            }
+            function unformat(money) {
+                return parseFloat(accounting.unformat(money))
+            }
+            function tableToExcel(table, name, filename) {
+        let uri = 'data:application/vnd.ms-excel;base64,', 
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><title></title><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>', 
+        base64 = function(s) { return window.btoa(decodeURIComponent(encodeURIComponent(s))) },         format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; })}
+        
+        if (!table.nodeType) table = document.getElementById(table)
+        var tbl2 = document.getElementById("add");
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML + tbl2.innerHTML}
+
+        var link = document.createElement('a');
+        link.download = filename;
+        link.href = uri + base64(format(template, ctx));
+        link.click();
+}
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+ var css = '@page { size: landscape; }',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+
+            style.type = 'text/css';
+            style.media = 'print';
+
+            if (style.styleSheet){
+            style.styleSheet.cssText = css;
+            } else {
+            style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+            var type = getUrlParameter("type")
+
+            if (type == 1) {
+                document.title = "Payroll History";
+                window.print();
+            } else {
+                var _date = getUrlParameter("daterange")
+                tableToExcel('append', 'name', 'payroll-history-detailed-'+_date+'.xls')
+            }
+     </script>

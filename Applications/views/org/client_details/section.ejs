@@ -1,0 +1,345 @@
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item ">
+                                    <a href="/org_client/<%= data_id %>" class="nav-link active">Organization - Client - Details</a>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/wage_settings/<%= data_id %>" class="nav-link">Wage Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block text-xs-center">
+                                <% data.forEach(function (user) { %>
+                                <p><h2><%= user.client_name %></h2></p>
+                                <% }) %>
+                            </div>
+                            
+                            <div class="card-block">
+                                <% data.forEach(function (user) { %>
+                                <div class="form">
+                                    <div class="form-header">
+                                        <h2>Client Info</h2>
+                                    </div>
+                                    <div class="form-body">
+                                        <div class="row col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-lg-4">
+                                                   <input type="hidden" class="form-control" name="client_id" id="client_id" value="<%= user.id %>"> 
+                                                   <label for="projectinput1">Company Name</label>
+                                                   <input type="text" class="form-control" name="client_name" id="client_name" value="<%= user.client_name %>" placeholder="Client Name" readonly> 
+                                                </div>
+                                                <div class="col-md-3 col-lg-4">
+                                                   <label for="projectinput1">Contract Start</label>
+                                                   <input type="text" class="form-control" name="contract_start" id="contract_start" value="<%= dateFormat(user.contract_start, 'isoDate' ) %>" placeholder="Contract Start" readonly> 
+                                                </div>
+                                                <div class="col-md-3 col-lg-4">
+                                                   <label for="projectinput1">Contract End</label>
+                                                   <input type="text" class="form-control" name="contract_end" id="contract_end" value="<%= dateFormat(user.contract_end, 'isoDate' ) %>" placeholder="Contract End" readonly> 
+                                                </div>
+                                                 
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-3 col-lg-4">
+                                                   <label for="projectinput1">Contact Person</label>
+                                                   <input type="text" class="form-control" name="contact_person" id="contact_person" value="<%= user.contact_name %>" placeholder="Contact Person" readonly> 
+                                                </div>
+                                                <div class="col-md-3 col-lg-4">
+                                                   <label for="projectinput1">Position</label>
+                                                   <input type="text" class="form-control" name="position" id="position" value="<%= user.contact_position%>" placeholder="Position" readonly> 
+                                                </div>
+                                                <div class="col-md-3 col-lg-4">
+                                                   <label for="projectinput1">Contact Number</label>
+                                                   <input type="text" class="form-control" name="contact_num" id="contact_num" value="<%= user.contact_no%>" placeholder="Contact Number" readonly> 
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-12 col-lg-12">
+                                                   <label for="projectinput1">Address</label>
+                                                   <input type="text" class="form-control" name="add" id="add" value="<%= user._add %>" placeholder="Address" readonly> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                    </div>
+                                    <div class="form-header">
+                                        <h2>Deduction Schedule</h2>
+                                    </div>
+                                    <div class="form-body">
+                                        <div class="row col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <label>Statutory Deduction Schedule</label>
+                                                    <% if (user.statury_deduc_sched == 1){%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="statutory_sched" class="custom-control-input" value="1" checked>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Monthly</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="statutory_sched" class="custom-control-input" value="2" disabled> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Semi Monthly</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }else{%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="statutory_sched" class="custom-control-input" value="1" disabled>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Monthly</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="statutory_sched" class="custom-control-input" value="2" checked="true" > 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Semi Monthly</span>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block"></div>
+                                        <div class="row col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>SSS Deduction Basis</label>
+                                                    <% if (user.sss_deduc_basis == 1){%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="sss_deduc_basis" class="custom-control-input" value="1" checked="true">
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="sss_deduc_basis" class="custom-control-input" value="2" disabled> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }else{%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="sss_deduc_basis" class="custom-control-input" value="1" disabled>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="sss_deduc_basis" class="custom-control-input" value="2" checked="true"> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>SSS Include</label>
+                                                    <% sss.forEach(function (sss) { %>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-checkbox ml-1">
+                                                            <% if (sss.cola == 1){%>
+                                                            <input type="checkbox" checked name="sss_cola" class="custom-control-input" value="1">
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="sss_cola" class="custom-control-input" value="1" disabled>
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">COLA</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-checkbox">
+                                                            <% if (sss.sea == 1){%>
+                                                            <input type="checkbox" checked name="sss_sea" class="custom-control-input" value="1"> 
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="sss_sea" class="custom-control-input" value="1" disabled>
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">SEA</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-checkbox">
+                                                            <% if (sss.ctpa == 1){%>
+                                                            <input type="checkbox" checked name="sss_ctpa" class="custom-control-input" value="1"> 
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="sss_ctpa" class="custom-control-input" value="1" disabled> 
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">CTPA</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }) %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block"></div>
+                                        <div class="row col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>PhilHealth Deduction Basis</label>
+                                                    <% if (user.philhealth_deduc_basis == 1){%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="ph_deduc_basis" class="custom-control-input" value="1"  checked="true">
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="ph_deduc_basis" class="custom-control-input" value="2" disabled> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }else{%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="ph_deduc_basis" class="custom-control-input" value="1" disabled>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="ph_deduc_basis" class="custom-control-input" value="2"  checked="true"> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>PhilHealth Include</label>
+                                                    <% ph.forEach(function (phil) { %>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-checkbox ml-1">
+                                                            <% if (phil.cola == 1){%>
+                                                            <input type="checkbox" checked name="ph_cola" class="custom-control-input" value="1">
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="ph_cola" class="custom-control-input" value="1" disabled>
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">COLA</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-checkbox">
+                                                            <% if (phil.sea == 1){%>
+                                                            <input type="checkbox" checked name="ph_sea" class="custom-control-input" value="1"> 
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="ph_sea" class="custom-control-input" value="1" disabled>
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">SEA</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-checkbox">
+                                                            <% if (phil.ctpa == 1){%>
+                                                            <input type="checkbox" checked name="ph_ctpa" class="custom-control-input" value="1"> 
+                                                            <%}else {%>
+                                                            <input type="checkbox" name="ph_ctpa" class="custom-control-input" value="1" disabled> 
+                                                            <%}%>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">CTPA</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }) %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-block"></div>
+                                        <div class="row col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>Wtax Deduction Schedule</label>
+                                                    <% if (user.Wtax_sched == 1){%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="wtax_sched" class="custom-control-input" value="1" checked="true">
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Monthly</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="wtax_sched" class="custom-control-input" value="2" disabled> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Semi-Monthly</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }else{%>
+                                                    <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="wtax_sched" class="custom-control-input" value="1" disabled>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Monthly</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="wtax_sched" class="custom-control-input" value="2" checked="true"> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Semi-Monthly</span>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6">
+                                                    <label>Wtax Deduction Basis</label>
+                                                    <% if (user.Wtax_deduc_basis == 1){%>
+                                                    <div class="input-group">
+                                                        <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="wtax_deduc_basis" class="custom-control-input" value="1" checked="true">
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="wtax_deduc_basis" class="custom-control-input" value="2" disabled> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <% }else{%>
+                                                    <div class="input-group">
+                                                        <div class="input-group">
+                                                        <label class="display-inline-block custom-control custom-radio ml-1">
+                                                            <input type="radio" name="wtax_deduc_basis" class="custom-control-input" value="1" disabled>
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Basic Amount</span>
+                                                        </label>
+                                                        <label class="display-inline-block custom-control custom-radio">
+                                                            <input type="radio" name="wtax_deduc_basis" class="custom-control-input" value="2" checked="true"> 
+                                                            <span class="custom-control-indicator"></span>
+                                                            <span class="custom-control-description ml-0">Gross Amount</span>
+                                                        </label>
+                                                    </div>
+                                                    <%}%>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                            </div>
+                            <div class="card-block" align="right">
+                                <input type="submit" name="submit" value="Submit" id="save" class="btn btn-success">
+                            </div>
+                            <div class="card-footer">
+                                <footer align="right">
+                                   <button type="submit" class="btn btn-outline-success" id="update_data">Update</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

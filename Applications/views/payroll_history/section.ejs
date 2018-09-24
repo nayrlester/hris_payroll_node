@@ -1,0 +1,101 @@
+    <div class="app-content content container-fluid">
+        <div class="content-wrapper">
+          <div class="content-header row">
+          </div>
+          <div class="content-body">
+              <div class="row">
+                  <div class="col-xs-12">
+                      <div class="card">
+                          <form>
+                            <div class="card-block">
+                                    <h4 class="card-title">Select Date Range</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <input type="text" name="daterange" value = "<%- daterange %>" class="form-control" id="daterange" required /> 
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                  </div>
+                          <% if(user.user_role == 1) { %>  
+                          <div class="card-block">
+                                <h4 class="card-title">Select Client</h4>
+                                <fieldset class="form-group position-relative has-icon-left mb-1">
+                                    <select class = "form-control" id="clientid" name = "clientId">
+                                        <option value = "">-- Select Client --</option>
+                                        <% client.forEach(function(rows){ %>
+                                            <option value = "<%- rows.id %>" "<%-(rows.id === clientId) ? 'selected' : ''%>"><%- rows.client_name %></option>
+                                        <% }) %>
+                                    </select>  
+                                    <div class="form-control-position">
+                                        <i class="icon-department"></i>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <% } %>
+                            <div class="card-block">
+                               
+                                  Alpha <input id = "alpha" type = "checkbox" name = "alpha" <%- (alpha == 1) ? 'checked' : '' %>   />
+                            </div>
+                            <div class="card-block">
+                                    <button id="export-to-pdf" class="btn btn-primary text-right">Print</button>
+                                    <button id="export-to-excell" class="btn btn-info text-right">Excel</button>
+                            </div>
+                        </form>
+                          <div class="card-body collapse in">
+                              <div class="table-responsive">
+                                    <table class="table table-bordered table-striped"  style="width:100%" id="payroll">
+                                    <thead >
+                                        <tr>
+                                            <td colspan="4"></td>
+                                            <td colspan="2" align="center"><b id="type"></b></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="bg-info">
+                                            <th>Employee Name</th>
+                                            <th>Company</th>
+                                            <th>Cuttoff</th>
+                                            <th>Month</th>
+                                            <th>Work Hours</th>
+                                            <th>Basic</th>
+                                            <th>Net</th>
+                                            <th>Gross</th>
+                                            <th>SSS</th>
+                                            <th>Philhealth</th>
+                                            <th>Pagibig</th>
+                                            <th>Tax</th>
+                                            <% if(alpha == 1) { %>  
+                                            <th>Tin</th>
+                                            <% } %>  
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                            <% query.forEach(function(rows){ %>
+                                                <tr class="bg-info">
+                                                    <td><%- rows.name %></td>
+                                                    <td><%- rows.client_name %></td>
+                                                    <td><%- rows.d_from %> - <%- rows.d_to %> </td>
+                                                    <td><%- rows.cuttoff %></td>
+                                                    <td><%- rows.work_hours %></td>
+                                                    <td><%- rows.rate %></td>
+                                                    <td><%- rows.net %></td>
+                                                    <td><%- rows.gross %></td>
+                                                    <td><%- rows.sss %></td>
+                                                    <td><%- rows.philhealth %></td>
+                                                    <td><%- rows.pagibig %></td>
+                                                    <td><%- rows.tax %></td>
+                                                     <% if(alpha == 1) { %>  
+                                                    <td><%- rows.tin_id %></td>
+                                                    <% } %> 
+                                                </tr>
+                                            <% }) %>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    

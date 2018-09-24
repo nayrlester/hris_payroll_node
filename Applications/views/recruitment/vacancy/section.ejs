@@ -1,0 +1,67 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Recruitment - Job Vacancies <button class="btn btn-outline-success" onclick="addVacancy()"><i class="icon-plus3"></i></button></h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Client Name</th>
+                                            <th>Job Title</th>
+                                            <th>Region</th>
+                                            <th>Department</th>
+                                            <th>Work Shift</th>
+                                            <th>Work Hours</th>
+                                            <th>Total Position</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) { %>
+                                        <tr>
+                                            <th scope="row"><%= i++ %></th>
+                                            <td><%= user.client_name %></td>
+                                            <td><%= user.job_title %></td>
+                                            <td><%= user.region %></td>
+                                            <td><%= user.dept %></td>
+                                            <td><%= user.shift_type %></td>
+                                            <td><%= user.shift_from %> - <%= user.shift_to %></td>
+                                            <td><%= user.total_position %></td>
+                                            <td>
+                                            <button type="button" class="btn btn-outline-info" onclick="updateVacancy('<%= user.id %>')"><i class="icon-edit"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="deleteVacancy('<%= user.id %>')"><i class="icon-trash"></i></button>
+                                            <a href="/list_vacancy_candidate/<%= user.id %>" class="btn btn-outline-success"><i class="icon-list"></i></a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

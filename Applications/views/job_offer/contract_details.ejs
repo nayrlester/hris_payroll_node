@@ -1,0 +1,258 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+          <div class="row">
+              <div class="col-xs-12">
+                  <div class="card">
+                      <div class="card-header">
+                          <h4 class="card-title">Job Offer - Contract Details
+                        </h4>
+                          <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                          <div class="heading-elements">
+                              <ul class="list-inline mb-0">
+                                  <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                  <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                  <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="card-body collapse in">
+                        <div class="card-block">
+                        	<div class="form">
+                                <div class="form-body">
+                                <input type="hidden" name="cid" id="cid" value="<%- result.id %>">
+                                <input type="hidden" name="candidate_id" id="candidate_id" value="<%- result.candidate_id %>">
+                                <input type="hidden" name="comp_id" id="comp_id" value="<%- result.comp_id %>">
+                                <input type="hidden" name="job_id" id="job_id" value="<%- result.job_id %>">
+                                <input type="hidden" name="dept_id" id="dept_id" value="<%- result.dept_id %>">
+                                <input type="hidden" name="region_id" id="region_id" value="<%- result.region_id %>">
+                                <input type="hidden" name="work_shift" id="work_shift" value="<%- result.work_shift %>">
+                                <input type="hidden" name="vacancy_id" id="vacancy_id" value="<%- result.vacancy_id %>">
+
+                                	<div class="col-md-6" >
+                                        <div class="form-group">
+											<label for="timesheetinput1">Candidate Name</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Candidate Name" name="Candidate Name" value="<%- result.fullname %>">
+												<div class="form-control-position">
+													<i class="icon-head"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Company Assign</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Company Assign" name="Company" value="<%- result.client_name %>">
+												<div class="form-control-position">
+													<i class="icon-building-o"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Job Title</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Job Title" name="Job Title" value="<%- result.job_title %>">
+												<div class="form-control-position">
+													<i class="icon-gavel"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Department</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Department" name="Department" value="<%- result.description %>">
+												<div class="form-control-position">
+													<i class="icon-clipboard3"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Working Shift</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Working Shift" name="Working Shift" value="<%- result.shift_name %>">
+												<div class="form-control-position">
+													<i class="icon-safari2"></i>
+												</div>
+											</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" >
+                                    	<div class="form-group">
+											<label for="timesheetinput1">Rate</label>
+											<div class="position-relative has-icon-left">
+												<input type="text" class="form-control" readonly="true" placeholder="Rate" name="rate" id="rate" value="<%- rate[0].rate %>">
+												<div class="form-control-position">
+													<i class="icon-money"></i>
+												</div>
+											</div>
+                                        </div>
+                                    	<div id="binput">
+                                        	<div class="form-group" >
+                                        		<label for="timesheetinput1">Benefits</label>
+												<label><button class="btn btn-flat btn-success icon-plus" onclick="addBenefits()"></button></label>
+												<div class="position-relative has-icon-left" id="benefits_data">
+													<select class="form-control" required="required" name="benefits[]" id="benefits"> 
+	                                        		  
+	                                                </select>
+													<div class="form-control-position">
+														<i class="icon-tags"></i>
+													</div>
+												</div>
+                                        	</div>
+                                        	<div id="benefits_append"></div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Contract Start</label>
+											<div class="position-relative has-icon-left">
+												<input type="date" class="form-control" placeholder="Contract Start" name="cstart" id="cstart">
+												<div class="form-control-position">
+													<i class="icon-calendar"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Contract End</label>
+											<div class="position-relative has-icon-left">
+												<input type="date" class="form-control" placeholder="Contract End" name="cend" id="cend">
+												<div class="form-control-position">
+													<i class="icon-calendar"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group">
+											<label for="timesheetinput1">Emplyment Status</label>
+											<div class="position-relative has-icon-left">
+												<select class="form-control" required="required" name="emp_stat" id="emp_stat"> 
+                                                  <option disabled selected>Select Employment Status</option>
+                                        		  <% var i = 1; status_job.forEach(function(row){ %>
+                                                  	<option value="<%- row.id %>"><%- row.description %></option>
+                                                  <% }) %>
+                                                </select>
+												<div class="form-control-position">
+													<i class="icon-thumb-tack"></i>
+												</div>
+											</div>
+                                        </div>
+                                        <div class="form-group" align="right">
+                                          	<button type="submit" class="btn btn-primary" onclick="submit()">
+												<i class="icon-check2"></i> Save
+											</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+ </div>
+<% include ../layout/footer.ejs %>
+<script>
+
+	function addBenefits(){
+    
+    	$("#benefits_data").clone().appendTo("#benefits_append");
+
+	}
+
+	var benefit_group = $("#benefits").val();
+    var dropdown_benefit = $("#benefits");
+        $.ajax({
+        type:"GET",
+        url:"/benefits",
+        data:"json",
+        cache:false,
+        success:function(result){
+             
+            dropdown_benefit.empty();
+            var option1 = '';
+            dropdown_benefit.append('<option value="" disabled selected>Select Benefits</option>');
+            result.forEach(function(row) { 
+				var benefits = JSON.stringify(row.benefits);
+				var id = JSON.stringify(row.id);
+                option1+="<option value='" + id.replace(/\"/g, "") + "'>" + benefits.replace(/\"/g, "")   + "</option>";
+			});
+            dropdown_benefit.append(option1);
+             $("#benefits select").prop('selectedIndex', benefit_group);
+            }
+    });
+
+	
+    function submit(){
+    	var options = $("select[name='benefits[]']");
+	    var values = $.map(options ,function(option) {
+	        return option.value;
+	    });
+
+	    var comp_id = $('#comp_id').val()
+	    , job_id = $('#job_id').val()
+	    , dept_id = $('#comp_id').val()
+	    , work_shift = $('#work_shift').val()
+	    , region_id = $('#region_id').val()
+	    , rate = $('#rate').val()
+	    , cstart = $('#cstart').val()
+	    , cend = $('#cend').val()
+	    , candidate_id = $('#candidate_id').val()
+	    , cid = $('#cid').val()
+	    , vacancy_id = $('#vacancy_id').val()
+	    , emp_stat = $('#emp_stat').val();
+
+	    var date = new Date();
+	    var today = date.getDate();
+	    var month = ("0" + date.getMonth()).slice(-2);
+	    var year = parseInt(date.getFullYear().toString().substr(-2));
+	    var emp_num = year + '-' + month + 0 + candidate_id;
+
+	    var data = {benefits:values,comp_id:comp_id,job_id:job_id,dept_id:dept_id,work_shift:work_shift,region_id:region_id,rate:rate,cstart:cstart,cend:cend,emp_stat:emp_stat,candidate_id:candidate_id,cid:cid,emp_num:emp_num,vacancy_id:vacancy_id};
+
+	    $.ajax({
+            type: "POST",
+            url: "/newEmployee",
+            data: data,
+            cache:false,
+            success: function(result){
+              if (result == 'success') {
+              	  Swal({
+		              title: 'Success!',
+		              text: 'New Employee Added Successfully',
+		              type: 'success',
+		          }).then(function() {
+		              window.location.href =
+		              "http://" +
+		              window.location.host +"/job_offer";
+		          })
+              }else{
+              	Swal({
+		              title: 'warning!',
+		              text: 'Error! Contact the Admin',
+		              type: 'warning',
+		          })
+              }
+              
+            }
+        });
+
+    }
+
+</script>
+
+<% include ../layout/foot.ejs %>

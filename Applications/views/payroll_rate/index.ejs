@@ -1,0 +1,54 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+<% include ../layout/foot.ejs %>
+
+<script>
+	function payrollRateList(id=""){
+        const data = { id: id}
+		$.get('/payroll-rate-list', data, function(data) {
+			var table = $("#payrollrate >tbody");
+			table.empty();
+			data.forEach(data => {
+				table.append('<tr> <td>'+data.job_title+'</td><td>'+money(data.basic_sal)+'</td><td>'+data.cola+'</td><td>'+data.sea+'</td><td>'+data.ctpa+'</td><td>'+data.ot+'</td><td>'+data.nd+'</td></tr>');
+			});
+		});
+	}
+	payrollRateList()
+
+	function printData(){
+        $('#company-logo').removeAttr('hidden')
+        $('#payrollrate').removeAttr('class')
+        $('.action').attr('hidden',true)
+        $('#payrollrate').attr('class','table_print')
+        $('#payrollrate').attr('align','right')
+        var divToPrint=document.getElementById("print_table");
+        newWin= window.open("","_self");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+        window.location.href = '/payroll-rate'
+        $('#payrollrate').removeAttr('table_print')
+        $('#payrollrate').attr('class','table table-bordered table-striped')
+        $('#company-logo').attr('hidden',true)
+    }
+	function money(money) {
+		return accounting.formatMoney(money, "")
+	}
+</script>

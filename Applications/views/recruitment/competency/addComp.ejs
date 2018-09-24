@@ -1,0 +1,110 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <a href="/list_vacancy_candidate/<%= data_id %>" class="btn btn-outline-success"><i class="icon-reply"></i></a>
+                            Add Candidate
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Candidate Name</th>
+                                            <th>Contact Number</th>
+                                            <th>Email</th>
+                                            <th>Age</th>
+                                            <th>Date of Birth</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) { %>
+                                        <tr>
+                                            <th scope="row"><%= i++ %></th>
+                                            <td><%= user.fname %> <%= user.mname %> <%= user.lname %></td>
+                                            <td><%= user.contact_num %></td>
+                                            <td><%= user.email %></td>
+                                            <td><%= user.age %></td>
+                                            <td><%= dateFormat(user.bday, "isoDate" ) %></td>
+                                            <td>
+                                             <a href="/rec_candidate_info?id=<%= user.id %>" class="btn btn-outline-primary"><i class="icon-eye"></i></a>
+                                             <button type="button" class="btn btn-outline-success" onclick="addCandidate('<%= user.id %>','<%= data_id %>')"><i class="icon-plus3"></i></button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            </div>
+        </div>
+  </div>
+</div>
+</div>
+<% include ../../layout/footer.ejs %>
+<script>
+    function addCandidate(id,c_id){
+        $('#rowid').val(id);
+        $('#c_id').val(c_id);
+	    $('#addModal_update').modal('show');
+		$('.modal-title').text('Add Competency Candidate');
+    }
+</script>
+
+<div class="modal fade text-xs-left" id="addModal_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="form-horizontal form-simple" id="addCandidate" method="post" action="/addCompCandidate" novalidate>
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" name="rowid" id="rowid">
+            <input type="hidden" name="c_id" id="c_id">
+            <p>
+                Are you sure you want to Add Candidate?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary">Add</button>
+        </div>
+        </div>
+        </form>
+    </div>
+</div>
+<% include ../../layout/foot.ejs %>

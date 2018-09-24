@@ -1,0 +1,37 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+<% include ../layout/foot.ejs %>
+
+<script>
+    $("#export-to-pdf").click(function() {
+        var daterange = $("#daterange").val()
+        var clientId = $("#clientid").val()
+        var alpha = $('#alpha').prop('checked') ? 1 : 0
+        window.open("/print-client-history?daterange="+daterange+"&clientId="+clientId+"&type=1&alpha="+alpha, '_blank');
+    })
+
+    $("#export-to-excell").click(function () {
+        var daterange = $("#daterange").val()
+        var clientId = $("#clientid").val()
+        var alpha = $('#alpha').prop('checked') ? 1 : 0
+        window.open("/print-client-history?daterange="+daterange+"&clientId="+clientId+"&type=2&alpha="+alpha, '_blank');
+    })
+
+</script>

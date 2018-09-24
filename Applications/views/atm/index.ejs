@@ -1,0 +1,146 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+<% include ../layout/footer.ejs %>
+<script>
+    function SearchEmp(value=""){
+        $('#emp_id').val('')
+        var obj = { value }
+        var emp_list = $("#emp_list")
+        $.get('/atm-employee-search', obj, function(obj) {
+            emp_list.empty()
+            if(obj.length != 0){
+                obj.forEach(data => {
+                    emp_list.removeAttr("hidden");
+                    emp_list.append('<div class="col-sm-12"><a href="#" onclick="EmpId('+data.id+')">'+data.full_name+'</a></div>')
+                });
+            }else{
+                emp_list.empty()
+            }
+        });
+    }
+    function EmpId(id){
+        var obj = { id }
+        $.get('/atm-employee-info', obj, function(obj) {
+            $("#emp_list").attr("hidden",true);
+            obj.forEach(data => {
+                $('#full_name').val(data.full_name)
+                $('#emp_id').val(data.id)
+            });
+        });
+    }
+	function updateAtm(canditate_id)
+	{
+      $("#form-atm").removeAttr('action');
+      $("#form-atm").attr("action",'/atm-employee-update');
+      $("#full_name").attr("readonly",'true');
+      $('#atm-modal-add').modal('show');
+      $('.modal-title').text('Update ATM Number Employee');
+      EmpId(canditate_id)
+	} 
+
+	function deleteAtm(id)
+	{
+	  $('#rowid_del').val(id);
+	  $('#RegionModal_delete').modal('show');
+	  $('.modal-title').text('Delete Region Name');
+	} 
+
+	function addAtm(){
+	  $('#atm-modal-add').modal('show');
+	  $('.modal-title').text('Add ATM Number Employee');
+	}
+
+	function printData(){
+        $('#company-logo').removeAttr('hidden')
+        $('#atmlist').removeAttr('class')
+        $('.action').attr('hidden',true)
+        $('#atmlist').attr('class','table_print')
+        $('#atmlist').attr('align','right')
+        var divToPrint=document.getElementById("print_table");
+        newWin= window.open("","_self");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+        window.location.href = '/atm-list'
+        $('#atmlist').removeAttr('table_print')
+        $('#atmlist').attr('class','table table-bordered table-striped')
+        $('#company-logo').attr('hidden',true)
+    }
+
+</script>
+
+
+<div class="modal fade text-xs-left" id="atm-modal-add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="form-atm" method="post" action="/atm-employee-add" novalidate>
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+                <input type="hidden" id="emp_id" name="emp_id">
+				<input type="text" class="form-control" id="full_name" name="full_name" onkeyup="SearchEmp(this.value)" placeholder="Search employee name" required>
+				<div class="form-control-position">
+				    <i class="icon-head"></i>
+                </div>
+                <div id="emp_list"></div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="atm_numer" name="atm_numer" placeholder="ATM Number" required>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary" >Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="RegionModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="atm-delete" method="post" action="/atm-employee-delete" novalidate>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+  		<input type="hidden" name="rowid_del" id="rowid_del">
+		<p>
+			Are you sure you want to delete Region?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-outline-primary">Delete</button>
+	  </div>
+	</div>
+	</form>
+  </div>
+</div>
+
+
+<% include ../layout/foot.ejs %>

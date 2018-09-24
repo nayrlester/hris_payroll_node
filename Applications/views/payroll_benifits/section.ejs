@@ -1,0 +1,117 @@
+
+
+    <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+              <div class="content-header row">
+              </div>
+              <div class="content-body">
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title">Payroll Contribution <button class="btn btn-outline-success" ><i class="icon-plus3"></i></button></h4>
+                                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                  <div class="heading-elements">
+                                      <ul class="list-inline mb-0">
+                                          <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                          <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                          <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="card-block">
+                                    <h4 class="card-title">Select Client</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <select class = "form-control" id="clientid"  required>
+                                            <option value = "">-- Select Client --</option>
+                                            <% client.forEach(function(rows){ %>
+                                                <option value = "<%- rows.id %>"><%- rows.client_name %></option>
+                                            <% }) %>
+                                        </select>  
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="card-block">
+                                    <h4 class="card-title">Select Contribution</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <select class = "form-control" id="pclient" onchange="pContribution(this.value)" required>
+                                            <option value = "">-- Select Contribution --</option>
+                                            <option value = "philhealth"> Philhealth</option>
+                                            <option value = "pagibig"> Pagibig</option>
+                                            <option value = "sss"> SSS</option>
+                                            <option value = "tax"> Tax</option>
+                                        </select>  
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <div class="card-block">
+                                    <h4 class="card-title">Select Date Range</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <input type="text" name="daterange" class="form-control" id="daterange" required /> 
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                    <button id="btn-search"  onclick="pContribution('search')" class="btn btn-primary">Search</button>
+                                    <button id="export-to-excell" hidden onclick="pContribution()" class="btn btn-info">Export To Excell</button>
+                                    <a href="#" hidden id="print" onclick="printData()" class="btn btn-info">Print <i class="fa fa-print"></i></a>
+                                    
+                                </div>
+                              <div class="card-body collapse in">
+                                  <div class="table-responsive" id="print_table">
+                                        <img class="img-responsive" hidden id="company-logo"  style="width:auto!important;height: 50px; " align="right" src="/app-assets/images/logo/logo1.png">
+                                        <style>
+                                        .table_print {
+                                            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                                            border-collapse: collapse;
+                                            width: 100%;
+                                        }
+                                        .table_print td, .table_print th {
+                                            border: 1px solid #ddd;
+                                            padding: 8px;
+                                        }
+                                        .table_print tr:nth-child(even){background-color: #f2f2f2;}
+                                        .table_print tr:hover {background-color: #ddd;}
+                                        .table_print th {
+                                            padding-top: 12px;
+                                            padding-bottom: 12px;
+                                            text-align: left;
+                                            color: white;
+                                        }
+                                        </style>
+                                        <table class="table table-bordered table-striped"  style="width:100%" id="payroll-contribution">
+                                        <thead >
+                                            <tr>
+                                                <td colspan="4"></td>
+                                                <td colspan="2" align="center"><b id="type"></b></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr class="bg-info">
+                                                <th>Lastname</th>
+                                                <th>Firstname</th>
+                                                <th>Middlename</th>
+                                                <th>Basic Salary</th>
+                                                <th>Employee</th>
+                                                <th>Employer</th>
+                                                <th>Total</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                              
+                                          </tbody>
+                                      </table>
+                                      
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        

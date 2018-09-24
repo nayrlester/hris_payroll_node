@@ -1,0 +1,669 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+  <div id="overlay">
+  <div id="progstat"></div>
+  <div id="progress"></div>
+  </div>
+
+  <div id="container">
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Recruitment - Candidate Information 
+                              <button class="btn btn-primary" id="editinfo" onclick="editinfo()">
+                                  <i class="icon icon-edit2"></i>
+                              </button>
+                            </h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="active-tab" data-toggle="tab" href="#personal_info" aria-controls="active" aria-expanded="true">Personal Information</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="link-tab" data-toggle="tab" href="#education" aria-controls="link" aria-expanded="false">Education</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#work" aria-controls="linkOpt">Work Experience</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#skill" aria-controls="linkOpt">Skills</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="linkOpt-tab" data-toggle="tab" href="#referrence" aria-controls="linkOpt">Character Referrence</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content px-1 pt-1">
+                                    <% data.forEach(function (user) { %>
+                                    <div role="tabpanel" class="tab-pane fade active in" id="personal_info" aria-labelledby="active-tab" aria-expanded="true">
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group" id="img_profile">
+                                                      <div class="col-md-3 col-lg-3" >
+                                                         <img id="imgid" class="profile-user-img img-responsive" style="width: 212px!important;height: 200px!important;" src="../../uploads/<%= user.img_url %>" alt="User profile picture">
+                                                          <h3 class="profile-username text-c>Picture 2 x 2</h3>">
+                                                          <span class="btn btn-success btn-block btn-file">
+                                                              Browse <input type="file" name="profile_img" id="image" accept="image/*" required="required" onchange="loadFile(event)" >
+                                                          </span>
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group" id="img_profile1">
+                                                      <div class="col-md-3 col-lg-3">
+                                                          <p align="lft">
+                                                            <img src="../../uploads/<%= user.img_url %>" class="img-responsive" style="width: 230px!important;height: 250px!important;">
+                                                          </p>
+                                                      </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">First Name</label>
+                                                           <input type="text" class="form-control" name="fname" id="fname" value="<%= user.fname%>" placeholder="First Name" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Middle Name</label>
+                                                           <input type="text" class="form-control" name="mname" id="mname" value="<%= user.mname%>" placeholder="Middle Name" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Last Name</label>
+                                                           <input type="text" class="form-control" name="lname" id="lname" value="<%= user.lname%>" placeholder="Last Name" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Age</label>
+                                                           <input type="text" class="form-control" name="age" id="age" value="<%= user.age%>" placeholder="Age" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">BirthDate</label>
+                                                           <input type="text" class="form-control" name="bdate" id="bdate" value="<%= user.bday%>" placeholder="BirthDate" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Gender</label>
+                                                           <input type="text" class="form-control" name="gender" id="gender" value="<%= user.sex%>" placeholder="Gender" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Email</label>
+                                                           <input type="text" class="form-control" name="email" id="email" value="<%= user.email%>" placeholder="Email" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Religion</label>
+                                                           <input type="text" class="form-control" name="ethnic" id="ethnic" value="<%= user.ethnic%>" placeholder="Religion" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Marital Status</label>
+                                                           <input type="text" class="form-control" name="marital_status" id="marital_status" value="<%= user.marital_status%>" placeholder="Marital Status" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Contact Number</label>
+                                                           <input type="text" class="form-control" name="contact_num" id="contact_num" value="<%= user.contact_num%>" placeholder="Contact Number" readonly> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 col-lg-12">
+                                                           <label for="projectinput1">Address</label>
+                                                           <input type="text" class="form-control" name="add" id="add" value="<%= user.street%>" placeholder="Street Address" readonly> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 col-lg-6">
+                                                           <label for="projectinput1">City</label>
+                                                           <input type="text" class="form-control" name="city" id="city" value="<%= user.city%>" placeholder="City Address" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Country</label>
+                                                           <input type="text" class="form-control" name="country" id="country" value="<%= user.country%>" placeholder="Country" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Zipcode</label>
+                                                           <input type="text" class="form-control" name="zipcode" id="zipcode" value="<%= user.zipcode%>" placeholder="Zipcode" readonly> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                                    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="link-tab" aria-expanded="false">
+                                      <button type="button" onclick="add_educ()" id="addeduc" class="btn btn-success pull-right">Add Education</button>
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <% educ.forEach(function (education) { %>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Education</label>
+                                                           <input type="text" class="form-control" name="education_attainment[]" id="education_attainment" value="<%= education.attainment%>" placeholder="Primary Education" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Address</label>
+                                                           <input type="text" class="form-control" name="educ_add[]" id="educ_add" value="<%= education.address%>" placeholder="Address" readonly > 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Date Graduated</label>
+                                                           <input type="text" class="form-control" name="educ_grad[]" id="educ_grad" value="<%= education.year_grad%>" placeholder="Date Graduated" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">School/Institution</label>
+                                                           <input type="text" class="form-control" name="educ_skul[]" id="educ_skul" value="<%= education.school_name%>" placeholder="School" readonly> 
+                                                        </div>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="work" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false">
+                                        <button type="button" onclick="add_exp()" id="addexp" class="btn btn-success pull-right">Add Experience</button>
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <% work_exp.forEach(function (exp) { %>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Company</label>
+                                                           <input type="text" class="form-control" name="wcomp[]" id="wcomp" value="<%= exp.employer %>" placeholder="Company" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Position</label>
+                                                           <input type="text" class="form-control" name="wposition[]" id="wposition" value="<%= exp.position %>" placeholder="Position" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">From *Note:(year)</label>
+                                                           <input type="text" class="form-control" name="wfrom[]" id="wfrom" value="<%= exp.from %>" placeholder="From" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">To *Note:(year)</label>
+                                                           <input type="text" class="form-control" name="wto[]" id="wto" value="<%= exp.to %>" placeholder="To" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                           <label for="projectinput1">Reason for leaving</label>
+                                                           <input type="text" class="form-control" name="wreason[]" id="wreason" value="<%= exp.reason_for_leaving %>" placeholder="Reason for Leaving" readonly> 
+                                                        </div>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="skill" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false">
+                                        <button type="button" onclick="add_skill()" id="addskill" class="btn btn-success pull-right">Add Skills</button>
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <% skills.forEach(function (skill) { %>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Skills</label>
+                                                           <input type="text" class="form-control" name="skills[]" id="skills[]" value="<%= skill.skill %>" placeholder="Skills" readonly> 
+                                                        </div>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="referrence" role="tabpanel" aria-labelledby="linkOpt-tab" aria-expanded="false" >
+                                        <button type="button" onclick="add_ref()" id="addref" class="btn btn-success pull-right">Add Reference</button>
+                                        <div class="form">
+                                            <div class="form-body">
+                                                <div class="row col-md-12 col-lg-12">
+                                                    <div class="form-group">
+                                                        <% refs.forEach(function (ref) { %>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Name</label>
+                                                           <input type="text" class="form-control" name="rname[]" id="rname" value="<%= ref.name %>" placeholder="Name" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Position</label>
+                                                           <input type="text" class="form-control" name="rposition[]" id="rposition" value="<%= ref.position %>" placeholder="Position" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Company</label>
+                                                           <input type="text" class="form-control" name="rcomp[]" id="rcomp" value="<%= ref.company %>" placeholder="Company" readonly> 
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-3">
+                                                           <label for="projectinput1">Contact Number</label>
+                                                           <input type="text" class="form-control" name="rcontact[]" id="rcontact" value="<%= ref.contact_num %>" placeholder="Contact Number" readonly> 
+                                                        </div>
+                                                        <% }) %>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer" align="right" id="submitbutton">
+                           <button class="btn btn-success">
+                                <i class="icon icon-save"></i> Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+   <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <% data.forEach(function (row) { %>
+                              <h4 class="card-title">Employee Gov't ID 
+                                <% if(govt_id != '') {%>
+                                <button class="btn btn-outline-success disabled"><i class="icon-plus3"></i></button>
+                                <% }else{%>
+                                    <button class="btn btn-outline-success" onclick="addGovtID('<%- row.id %>')"><i class="icon-plus3"></i></button>
+                                <% }%>
+                              </h4>
+                            <% })%>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                           <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>SSS ID</th>
+                                            <th>TIN ID</th>
+                                            <th>PhilHealth ID</th>
+                                            <th>Driver License</th>
+                                            <th>PRC License</th>
+                                            <th>Postal ID</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% govt_id.forEach(function (gov) { %>
+                                        <tr>
+                                            <td><%= gov.sss_gsis %></td>
+                                            <td><%= gov.tin_id %></td>
+                                            <td><%= gov.philhealth_id %></td>
+                                            <td><%= gov.driver_liscense %></td>
+                                            <td><%= gov.prc_liscense %></td>
+                                            <td><%= gov.postal_id %></td>
+                                            <td>
+                                            <button class="btn btn-outline-info" onclick="editGovtID('<%- gov.id %>')"><i class="icon-edit"></i></button> 
+                                               <button class="btn btn-outline-danger" onclick="deleteGovtID('<%- gov.id %>')"><i class="icon-trash"></i></button> 
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+<% include ../../layout/footer.ejs %>
+<script>
+
+
+  function add_educ(){
+      $("#education").append('<div class="form-body"><div class="row col-md-12 col-lg-12" ><div class="form-group"><div class="col-md-3 col-lg-3"> <label for="projectinput1">Education</label><select class="form-control" name="education_attainment[]" id="educational_attainment"> '+ 
+      '<option disabled selected>Select Educational Attainment</option><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Vocational">Vocational</option><option value="Masteral">Masteral</option><option value="Doctorate">Doctorate</option></select></div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Address</label><input type="text" class="form-control" name="add[]" id="educ_add" placeholder="Address"  ></div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Date Graduated</label><input type="date" class="form-control" name="educ_grad[]" id="educ_grad" placeholder="Date Graduated" > </div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">School/Institution</label><input type="text" class="form-control" name="educ_skul[]" id="educ_skul" placeholder="School" > </div></div></div></div>');
+  }
+
+  function add_exp(){
+      $("#work").append('<div class="form-body"><div class="row col-md-12 col-lg-12" ><div class="form-group"><div class="col-md-3 col-lg-3">  <label for="projectinput1">Company</label><input type="text" class="form-control" name="wcomp[]" id="wcomp" placeholder="Company" > </div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Position</label><input type="text" class="form-control" name="wposition[]" id="wposition" placeholder="Address"  ></div>'+
+      '<div class="col-md-3 col-lg-2"><label for="projectinput1">From *Note:(year)</label><input type="text" class="form-control" name="wfrom[]" id="wfrom" placeholder="From" > </div>'+
+      '<div class="col-md-3 col-lg-2"><label for="projectinput1">To *Note:(year)</label><input type="text" class="form-control" name="wto[]" id="wto" placeholder="To" >  </div>'+
+      '<div class="col-md-3 col-lg-2"><label for="projectinput1">Reason for leaving</label><input type="text" class="form-control" name="wreason[]" id="wreason" placeholder="Reason for Leaving" >  </div></div></div></div>');
+  }
+
+  function add_skill(){
+      $("#skill").append('<div class="form-body"><div class="row col-md-12 col-lg-12" ><div class="form-group"><div class="col-md-3 col-lg-3">  <label for="projectinput1">Skills</label><input type="text" class="form-control" name="skills[]" id="skills" placeholder="Skills" > </div></div></div></div>');
+  }
+
+  function add_ref(){
+      $("#referrence").append('<div class="form-body"><div class="row col-md-12 col-lg-12" ><div class="form-group"><div class="col-md-3 col-lg-3">   <label for="projectinput1">Name</label><input type="text" class="form-control" name="rname[]" id="rname" placeholder="Company" > </div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Position</label><input type="text" class="form-control" name="rposition[]" id="rposition" placeholder="Name" > </div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Company</label><input type="text" class="form-control" name="rcomp[]" id="rcomp" placeholder="Company" ></div>'+
+      '<div class="col-md-3 col-lg-3"><label for="projectinput1">Contact Number</label> <input type="text" class="form-control" name="rcontact[]" id="rcontact" placeholder="Contact Number" >   </div></div></div></div>');
+  }
+
+  $(document).ready(function(){
+      $('#submitbutton').hide();
+      $('#img_profile').hide();
+      $('#addeduc').hide();
+      $('#addexp').hide();
+      $('#addskill').hide();
+      $('#addref').hide();
+  });
+  
+  function editinfo(){
+    $(':input').removeAttr('readonly')
+    $('#submitbutton').show();
+    $('#editinfo').hide();
+    $('#img_profile').show();
+    $('#img_profile1').hide();
+    $('#addeduc').show();
+    $('#addexp').show();
+    $('#addskill').show();
+    $('#addref').show();
+  }
+
+  function addGovtID(id){
+    $('#addGovtID').modal('show');
+    $('.modal-title').text('Add New ID');
+    $('#rowid').val(id);
+  }
+
+  function deleteGovtID(id){
+    $('#row_del').val(id),
+    $('#deleteGovtID').modal('show');
+    $('.modal-title').text('Delete Contribution');
+  }
+
+  function editGovtID(id){
+    $('#Urowid').val(id),
+    $('#updateGovtID').modal('show');
+    $('.modal-title').text('Update Contribution');
+
+    $.ajax({
+      method:"GET",
+      url: "/GovtIDDetails/"+id,
+      cache:false,
+      success: function(res){
+
+          $('#Usss').val(res[0].sss_gsis);
+          $('#Utin').val(res[0].tin_id);
+          $('#Uphilhealth').val(res[0].philhealth_id);
+          $('#Upostal').val(res[0].postal_id);
+          $('#Udriver').val(res[0].driver_liscense);
+          $('#Uprc').val(res[0].prc_liscense);
+      }
+    });
+
+  }
+
+  function deleteGovtID(id){
+      $('#row_del').val(id),
+      $('#deleteGovtID').modal('show');
+    $('.modal-title').text('Delete Govt ID');
+  }
+
+  function submit(){
+    var sss = $('#sss').val(),
+      rowid = $('#rowid').val(),
+      tin = $('#tin').val(),
+      philhealth = $('#philhealth').val(),
+      postal = $('#postal').val(),
+      driver = $('#driver').val(),
+      prc = $('#prc').val();
+
+    var data = {rowid:rowid,sss:sss,tin:tin,driver:driver,prc:prc,philhealth,postal};
+    $.ajax({
+      method:"POST",
+      data:data,
+      url: "/addGovtID",
+      cache:false,
+      success: function(result){
+              if (result == 'success') {
+                  Swal({
+                  title: 'Success!',
+                  text: 'New GovtID Added Successfully',
+                  type: 'success',
+              }).then(function() {
+                  setTimeout(function(){
+                    location.reload();
+                  },300);
+              })
+              }else{
+                Swal({
+                  title: 'warning!',
+                  text: 'Error! Contact the Admin',
+                  type: 'warning',
+              })
+              }
+              
+            }
+    });
+  }
+
+  function update(){
+
+    var sss = $('#Usss').val(),
+      rowid = $('#Urowid').val(),
+      tin = $('#Utin').val(),
+      philhealth = $('#Uphilhealth').val(),
+      postal = $('#Upostal').val(),
+      driver = $('#Udriver').val(),
+      prc = $('#Uprc').val();
+
+    var data = {rowid:rowid,sss:sss,tin:tin,driver:driver,prc:prc,philhealth:philhealth,postal:postal};
+    $.ajax({
+      method:"POST",
+      data:data,
+      url: "/updateGovtIDData",
+      cache:false,
+      success: function(result){
+              if (result == 'success') {
+                  Swal({
+                  title: 'Success!',
+                  text: 'New GovtID Updated Successfully',
+                  type: 'success',
+              }).then(function() {
+                  setTimeout(function(){
+                    location.reload();
+                  },300);
+              })
+              }else{
+                Swal({
+                  title: 'warning!',
+                  text: 'Error! Contact the Admin',
+                  type: 'warning',
+              })
+              }
+              
+            }
+    });
+  }
+
+  function deleteDetails(){
+      var id = $('#row_del').val();
+
+    $.ajax({
+      method:"POST",
+      url: "/deleteGovtID",
+      data: {id:id},
+      cache:false,
+      success: function(res){
+        if (res == 'success') {
+                  Swal({
+                  title: 'Success!',
+                  text: 'GovtID Deleted Successfully',
+                  type: 'success',
+              }).then(function() {
+                 setTimeout(function(){
+                  location.reload();
+                 },300);
+              })
+              }else{
+                Swal({
+                  title: 'warning!',
+                  text: 'Error! Contact the Admin',
+                  type: 'warning',
+              })
+              }
+            }
+    });
+  }
+  
+</script>
+
+<div class="modal fade text-xs-left" id="addGovtID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <input type="hidden" name="rowid" id="rowid">
+    <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+    </div>
+    <div class="modal-body">
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="sss" name="sss" placeholder="SSS ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="tin" name="tin" placeholder="TIN ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="philhealth" name="philhealth" placeholder="PhilHealth ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="driver" name="driver" placeholder="Driver License" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="prc" name="prc" placeholder="PRC License" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="postal" name="postal" placeholder="Postal ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+    <button type="submit" onclick="submit()" class="btn btn-outline-primary">Save changes</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="updateGovtID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+    <input type="hidden" name="rowid" id="Urowid">
+    </div>
+    <div class="modal-body">
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Usss" name="sss" placeholder="SSS ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Utin" name="tin" placeholder="TIN ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Uphilhealth" name="philhealth" placeholder="PhilHealth ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Udriver" name="driver" placeholder="Driver License" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Uprc" name="prc" placeholder="PRC License" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    <fieldset class="form-group position-relative has-icon-left mb-1">
+      <input type="text" class="form-control" id="Upostal" name="postal" placeholder="Postal ID" required="true">
+      <div class="form-control-position">
+          <i class="icon-list"></i>
+      </div>
+    </fieldset>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+    <button type="submit" onclick="update()" class="btn btn-outline-primary">Save changes</button>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="deleteGovtID" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" name="row_del" id="row_del">
+    <p>
+      Are you sure you want to delete Contribution?
+    </p>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-outline-primary" onclick="deleteDetails()">Delete</button>
+    </div>
+  </div>
+  </div>
+</div>
+<% include ../../layout/foot.ejs %>

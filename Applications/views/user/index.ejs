@@ -1,0 +1,254 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+<script>
+	function updateUser(id)
+	{
+	  $('#rowid').val(id);
+	  $('#userListModal').modal('show');
+		$('.modal-title').text('Update User List');
+		
+		$.ajax({
+			type:"get",
+			url:"/user_list_by_id?id="+id,
+			cache:false,
+			success:function(data){
+				data.forEach(function(row) { 
+					var uname = JSON.stringify(row.username);
+					var fname = JSON.stringify(row.fname);
+					var mname = JSON.stringify(row.mname);
+					var lname = JSON.stringify(row.lname);
+					var pass = JSON.stringify(row.password);
+					
+					$('#uname').val(uname.replace(/\"/g, ""));
+					$('#fname').val(fname.replace(/\"/g, ""));
+					$('#mname').val(mname.replace(/\"/g, ""));
+					$('#lname').val(lname.replace(/\"/g, ""));
+					$('#pass').val(pass.replace(/\"/g, ""));
+				});
+			}	
+		});
+	} 
+
+	function addUser(){
+
+	  $('#addUserModal').modal('show');
+		$('.modal-title').text('Add User List');
+		
+	}
+</script>
+
+<div class="modal fade text-xs-left" id="userListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/updateUsers" >
+	  	<input type="hidden" name="rowid" id="rowid">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="uname" name="uname" placeholder="User Name" required>
+				<div class="form-control-position">
+				    <i class="icon-head"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+					<input type="password" class="form-control" id="pass" name="pass" placeholder="Password" required>
+					<div class="form-control-position">
+							<i class="icon-head"></i>
+					</div>
+				</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="fname" name="fname" placeholder="Your First Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="mname" name="mname" placeholder="Your Middle Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="lname" name="lname" placeholder="Your Last Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<select  class="form-control" name="role" id="role" required>
+					<option disabled selected>Select User Role</option>
+					<% role.forEach(function (user) { %>
+						 <option value="<%= user.id%>"><%= user.description %></option>
+					 <% })%>
+				</select>
+				<div class="form-control-position">
+						<i class="icon-list"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/addUser" >
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+					<var id="result-container" class="result-container"></var>
+							<div class="typeahead__container">
+									<div class="typeahead__field">
+											<span class="typeahead__button">
+													<button type="submit">
+															<i class="icon-user"></i>
+													</button>
+											</span>
+											<span class="typeahead__query">
+													<input class="js-typeahead-country_v2" name="search" id="search" type="search" placeholder="Search Employee Name" autocomplete="off" required>
+											</span>
+									</div>
+							</div>
+				</fieldset>
+				<input type="hidden" name="emp_id" id="emp_id"/>
+				<fieldset class="form-group position-relative has-icon-left mb-1">
+					<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Full Name" readonly>
+					<div class="form-control-position">
+							<i class="icon-user"></i>
+					</div>
+				</fieldset>
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="uname" name="uname" placeholder="User Name" required>
+				<div class="form-control-position">
+				    <i class="icon-head"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+					<input type="password" class="form-control" id="pass" name="pass" placeholder="Password" required>
+					<div class="form-control-position">
+							<i class="icon-head"></i>
+					</div>
+				</fieldset>
+			<!-- <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="fname" name="fname" placeholder="Your First Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="mname" name="mname" placeholder="Your Middle Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="lname" name="lname" placeholder="Your Last Name" readonly>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset> -->
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<select  class="form-control" name="role" id="role" required>
+					<option disabled selected>Select User Role</option>
+					<% role.forEach(function (user) { %>
+						 <option value="<%= user.id%>"><%= user.description %></option>
+					 <% })%>
+				</select>
+				<div class="form-control-position">
+						<i class="icon-list"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+
+
+<script>
+	$(document).ready(function(){
+		var search = $('#search').val();
+		$.typeahead({
+				input: '.js-typeahead-country_v2',
+				minLength: 1,
+				maxItem: 20,
+				order: "asc",
+				accent: true,
+				searchOnFocus: true,
+				source: {
+						ajax: {
+								type: "GET",
+								url: "/search_emp?query="+search,
+								success:function(result){	
+									data = [];
+									field = {};
+										$.each(result, function (i, value) {
+											console.log(value)
+											field[value.fullname] = value;
+											field[value.emp_id] = value;
+											result.push(value.emp_id,' - ',value.fullname);
+											
+											$('#user_name').val(value.name);
+											$('#emp_id').val(value.emp_id);
+										});
+								}
+						}	
+				},
+				callback: {
+						onResult: function (node, query, result, resultCount) {
+								if (query === "") return;
+								
+								var text = "";
+								if (result.length > 0 && result.length < resultCount) {
+										text = "Showing <strong>" + result.length + "</strong> of <strong>" + resultCount + '</strong> elements matching "' + query + '"';
+								} else if (result.length > 0) {
+										text = 'Showing <strong>' + result.length + '</strong> elements matching "' + query + '"';
+								} else {
+										text = 'No results matching "' + query + '"';
+								}
+								$('#result-container').html(text);
+						}
+				}
+		});
+	
+	});
+	</script>
+<% include ../layout/foot.ejs %>

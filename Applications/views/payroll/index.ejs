@@ -1,0 +1,285 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+<% include ../layout/footer.ejs %>
+
+
+<% include ../layout/foot.ejs %>
+
+<script>
+        $(document).ready(function(){
+            var hourEmployee = 0;
+            var globalEmpId = "";
+            var buttonPick;
+            $(".compute").val(0);
+            var taxGlobal = {};
+            function reset() {
+                $("#employee-pick").html("");
+                $(".input-hours").val(0);
+                $(".input-info").val(0);
+                $(".compute").val(0);
+                $(".reset").val(0);
+                $(".salary").val(0);
+                $(".reset").html(0);
+                $(".loan-get").val(0);
+            }
+            $(".input-info").keyup(function() {
+                var other_deducAmount = $("#other_deducAmount").val();
+                $("#other_deductions").val(money(other_deducAmount));
+                computeSalary(this);
+            });
+
+            $("#process").click(function() {
+                var check = true;
+                var details = [];
+                $( ".check-payroll" ).each(function() {
+                    var row = $(this).html();
+                    if(row <= 0) {
+                        Swal({
+                            title: 'Warning!',
+                            text: 'Please Finish Processing other employee for payroll',
+                            type: 'warning',
+                        });
+                        check = false;
+                    }
+                });
+
+                if (check) {
+                    $( ".select-user" ).each(function() {
+                        var det = $(this).attr("load");
+                        details.push(det);
+                    });
+                    var client = $("#pclient").val();
+                    var daterange = $("#daterange").val();
+                    var postData = { client: client, daterange: daterange, details: JSON.stringify(details) };
+                    $.post('/process-payroll/', postData, function(res) {
+                        var daterange = $("#daterange").val()
+                        var client = $("#pclient").find('option:selected').text();
+                        Swal({
+                            title: 'Success!',
+                            text: 'Payroll '+daterange+" for "+client+" Saved Successfully",
+                            type: 'success',
+                        }).then(function() {
+                            var params = [
+                                "daterange="+daterange
+                            ];
+                            window.location.href =
+                            "http://" +
+                            window.location.host +
+                            window.location.pathname +
+                            '?' + params.join('&');
+                        })
+                        
+                    });
+                }
+            });
+            function computeSalary(btn) {
+                var hours = unformat($(btn).val());
+                var id = $(btn).attr("id").substring(1);
+                var rate = unformat($("#"+id).val());
+                $("#"+id+"_amount").val(money(hours * rate));
+                var basic_salary = unformat($(".basic-salary").val());
+                $("#basic-salary").val(money(basic_salary));
+                var gross = 0
+
+                $(".compute").each(function(row) {
+                    gross = parseFloat(gross) + (parseFloat(unformat($(this).val())));
+                });
+
+                var addTax = (gross - unformat(basic_salary)) * unformat(taxGlobal.excess);
+                
+                $("#add-tax-employee").html(money(addTax));
+                $("#add-tax-employer").html(0);
+                $("#add-tax-total").html(money(addTax));
+                var other_deducAmount = $("#other_deducAmount").val();
+                var taxEmp = unformat($("#tax-employee").html());
+                var pagibig = unformat($("#pagibig-employee").html());
+                var sss = unformat($("#sss-employee").html());
+                var philhealth = unformat($("#philhealth-employee").html());
+                var loanGet = 0;
+
+                $(".loan-get").each(function() {
+                    var vl = unformat($(this).val())
+                    loanGet = loanGet + parseFloat((vl) ? vl : 0);
+                });
+
+                var net = parseFloat((gross - taxEmp - pagibig - sss - philhealth - addTax - loanGet));
+               
+                $("#net_sal").val(money(net));
+                var total_deduc = parseFloat(taxEmp + pagibig + sss + philhealth);
+                var other_deductions = parseFloat(other_deducAmount);
+                $("#total_deductions").val(money(total_deduc));
+                $("#other_deductions").val(money(other_deductions));
+                $("#total_income").val(money(net));
+
+                $("#gross_sal").val(money(gross));
+            }
+            $( "body" ).on( "click", ".select-user", function( event ) {
+                taxGlobal={};
+                reset();
+                buttonPick = $(this);
+                var selected = JSON.parse($(this).attr("details"));
+                $("#employee-pick").html('');
+                if(selected) {
+                    $("#employee-pick").html(selected.emp_id+" - "+selected.full_name); 
+                    $.get('/wage-employee-details/'+ selected.emp_id).then(function (data) {
+                        var salaryDetails = data.salaryDetails,
+                          philhealth = data.philhealth,
+                          loanRequest = data.loanRequest,
+                          sss = data.sss,
+                          pagibig = data.pagibig,
+                          tax = data.tax;
+                        taxGlobal = tax;
+                        emp_id = selected.emp_id;
+                        globalEmpId = selected.emp_id;
+                        $("#cola_amount").val(money(salaryDetails.cola));
+                        $("#sea_amount").val(money(salaryDetails.sea));
+                        $("#ctpa_amount").val(money(salaryDetails.ctpa));
+                        var other_deducAmount = $("#other_deducAmount").val();
+
+                        $("#philhealth-employee").html(money(philhealth.employee));
+                        $("#philhealth-employer").html(money(philhealth.employer));
+                        $("#philhealth-total").html(money(philhealth.employer+philhealth.employee));
+
+                        $("#sss-employee").html(money(sss.employee));
+                        $("#sss-employer").html(money(sss.employer));
+                        $("#sss-total").html(money(sss.employer+sss.employee));
+
+                        $("#pagibig-employee").html(money(pagibig.employee));
+                        $("#pagibig-employer").html(money(pagibig.employer));
+                        $("#pagibig-total").html(money(pagibig.employer+pagibig.employee));
+
+                        $("#tax-employee").html(money(tax.employee));
+                        $("#tax-employer").html(money(tax.employer));
+                        $("#tax-total").html(money(tax.employer+tax.employee));
+                        $(".daily-rate").val(money((salaryDetails.wagePerDay)));
+                        $(".hourlyRate").val(money((salaryDetails.perHour)));
+                        $("#monthlyRate").val(money((salaryDetails.wagePerMonth)));
+
+                        hourEmployee = salaryDetails.perHour;
+
+                        loanRequest.forEach(function(rows) {
+                            $("#"+rows.loan_type).val(money(rows.payable));
+                        });
+
+                        var loopSd = $.extend(true, {}, salaryDetails);
+
+                        delete loopSd["id"];
+                        delete loopSd["company_id"];
+                        delete loopSd["job_id"];
+                        delete loopSd["dept_id"];
+                        delete loopSd["cola"];
+                        delete loopSd["sea"];
+                        delete loopSd["ctpa"];
+                        delete loopSd["rate"];
+                        delete loopSd["wagePerDay"];
+                        delete loopSd["perHour"];
+                        delete loopSd["wagePerDay"];
+                        
+                        $.each( loopSd, function( key, value ) {
+                            var newHourly = parseFloat(salaryDetails.perHour) * (parseFloat(value));
+                            $("#"+key).val(money(newHourly));
+                            
+                        });
+
+                        var attr = buttonPick.attr('load');
+
+                        // For some browsers, `attr` is undefined; for others,
+                        // `attr` is false.  Check for both.
+                        if (typeof attr !== typeof undefined && attr !== false) {
+                            var load = JSON.parse(attr);
+                            $.each(load, function(key, value) {
+                                $("#_"+key).val(value);
+                                computeSalary("#_"+key);
+                            });
+                        }
+                        
+                        $("#_work_hours").focus();
+
+                    })
+                }
+            });
+            $('#pclient').change(function() {
+                var tbl_id = "#pick-client > tbody";
+                $(tbl_id).html("");
+                var client_id = $(this).val()
+                if (client_id) {
+                    var tbl = "#pic"
+                  $.get("/org-client-by-id/"+client_id).then(function(data) {
+                    data.forEach(element => {
+                        var elem = JSON.stringify(element);
+                        $(tbl_id).append(
+                            "<tr><td>"+element.full_name+"</td><td>"+money(element.basic_sal)+"</td><td>"+element.job_title+"</td><td class = 'check-payroll' id = '"+element.emp_id+"'>0</td><td><button class = 'btn select-user btn-success' details='"+elem+"'>Select</button></td></tr>"
+                        );
+                    });
+                  });
+                }
+            });
+            $("#save-details").click(function () {
+                buttonPick.attr("emp_id", globalEmpId);
+                var load = {};
+                $(".input-info").each(function(row) {
+                    var val = parseFloat($(this).val());
+                    if (val > 0) {
+                      var id = $(this).attr("id").substring(1);
+                      load[id] = $(this).val();
+                    }
+                });
+                var net = $("#net_sal").val();
+                load["basic_rate"] =  unformat($("#daily_rate").val());
+                load["gross"] = unformat($("#gross_sal").val());
+                load["payment_type"] = unformat($("#payment_typ").val());
+                load["emp_id"] = globalEmpId;
+                load["net"] = unformat(net)
+                load["employee"] = {};
+                load["employer"] = {};
+                load["loan"] = {};
+
+                load["employee"] = {
+                    sss: unformat($("#sss-employee").html()),
+                    philhealth: unformat($("#philhealth-employee").html()),
+                    pagibig: unformat($("#pagibig-employee").html()),
+                    tax: unformat($("#tax-employee").html()),
+                    add_tax: unformat($("#add-tax-employee").html())
+                };
+
+                load["employer"] = {
+                    sss: unformat($("#sss-employer").html()),
+                    philhealth: unformat($("#philhealth-employer").html()),
+                    pagibig: unformat($("#pagibig-employer").html())
+                }
+
+                $( ".loan-get" ).each(function(row) {
+                        var val = unformat($(this).val())
+                        if (val > 0){
+                            var code = $(this).attr("code");
+                            load["loan"][code] = val;
+                        }
+                });
+
+                buttonPick.attr("load", JSON.stringify(load));
+                $("#"+globalEmpId).html(net);
+                reset();
+                $("#pick-client").focus();
+            });
+            function money(money) {
+                return accounting.formatMoney(money, "")
+            }
+            function unformat(money) {
+                return parseFloat(accounting.unformat(money))
+            }
+        });
+</script>

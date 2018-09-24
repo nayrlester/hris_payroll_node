@@ -1,0 +1,46 @@
+
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+
+<% include ../layout/foot.ejs %>
+
+<script>
+        $(document).ready(function(){
+          $("#process").click(function() {
+              var date_range = ($("#date").val()).split("to");
+              var company = $("#pclient").val();
+              var payment = $("#payment").val();
+              var obj = {date_from: date_range[0],date_to: date_range[1], client: company, payment: payment};
+              $.get('/search-payroll', obj, function(data) {
+                var tbl = $("#employee >tbody");
+                tbl.empty();
+                data.forEach(element => {
+                    tbl.append('<tr> <td>'+element.full_name+'</td><td>'+accounting.formatMoney(element.net, '')+'</td> <td>'+element.payment_type+'</td> <td><a class = "btn btn-primary" target ="_blank" href = "/view-payroll-details/'+element.id+'">View</a></td> </tr>');
+                });
+              });
+          });
+          $("#print").click(function() {
+              var date_range = ($("#date").val()).split("to");
+              var company = $("#pclient").val();
+              var payment = $("#payment").val();
+              var obj = {date_from: date_range[0],date_to: date_range[1], client: company, payment: payment};
+              var pathname = 'http://localhost:8080/print-excel?date_from='+obj.date_from+'&date_to='+obj.date_to+'&client='+obj.client+'&payment='+payment
+              window.open(pathname, '_blank');
+          });
+        });
+</script>

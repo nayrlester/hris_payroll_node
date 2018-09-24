@@ -1,0 +1,270 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+<script>
+	
+	function addpagibig(){
+	  	$('#addpagibig').modal('show');
+		$('.modal-title').text('Add New Contribution');
+	}
+
+	function deletepagibig(id){
+	  	$('#row_del').val(id),
+	  	$('#deleteSSS').modal('show');
+		$('.modal-title').text('Delete Contribution');
+	}
+
+	function editpagibig(id){
+	  	$('#rowid').val(id),
+		$('#updatepagibig').modal('show');
+		$('.modal-title').text('Update Contribution');
+
+		$.ajax({
+			method:"GET",
+			url: "/pagibigDetails/"+id,
+			cache:false,
+			success: function(res){
+              	$('#Ustart_sal').val(res[0].start.toFixed(2));
+				$('#Uend_sal').val(res[0].end.toFixed(2));
+				$('#Uemployer').val(res[0].employer.toFixed(2));
+				$('#Uemployee').val(res[0].contribution.toFixed(2));
+            }
+		});
+
+	}
+
+	function deletePagibig(id){
+	  	$('#row_del').val(id),
+	  	$('#deletePagibig').modal('show');
+		$('.modal-title').text('Delete Contribution');
+	}
+
+	function submit(){
+		var start_sal = $('#start_sal').val(),
+			end_sal = $('#end_sal').val(),
+			employer = $('#employer').val() / 100,
+			employee = $('#employee').val() / 100;
+
+		var data = {start_sal:start_sal,end_sal:end_sal,employer:employer,employee:employee};
+		$.ajax({
+			method:"POST",
+			data:data,
+			url: "/addpagibig",
+			cache:false,
+			success: function(result){
+              if (result == 'success') {
+              	  Swal({
+		              title: 'Success!',
+		              text: 'New PagIbig Contribution Added Successfully',
+		              type: 'success',
+		          }).then(function() {
+		              window.location.href =
+		              "http://" +
+		              window.location.host +"/pagibig";
+		          })
+              }else{
+              	Swal({
+		              title: 'warning!',
+		              text: 'Error! Contact the Admin',
+		              type: 'warning',
+		          })
+              }
+              
+            }
+		});
+	}
+
+	function update(){
+
+		var rowid = $('#rowid').val(),
+		 	start_sal = $('#Ustart_sal').val(),
+			end_sal = $('#Uend_sal').val(),
+			employer = $('#Uemployer').val(),
+			employee = $('#Uemployee').val();
+
+		var data = {rowid:rowid,start_sal:start_sal,end_sal:end_sal,employer:employer,employee:employee};
+		$.ajax({
+			method:"POST",
+			data:data,
+			url: "/updatePagIbigData",
+			cache:false,
+			success: function(result){
+              if (result == 'success') {
+              	  Swal({
+		              title: 'Success!',
+		              text: 'New PagIbig Contribution Updated Successfully',
+		              type: 'success',
+		          }).then(function() {
+		              window.location.href =
+		              "http://" +
+		              window.location.host +"/pagibig";
+		          })
+              }else{
+              	Swal({
+		              title: 'warning!',
+		              text: 'Error! Contact the Admin',
+		              type: 'warning',
+		          })
+              }
+              
+            }
+		});
+	}
+
+	function deleteDetails(){
+	  	var id = $('#row_del').val();
+
+		$.ajax({
+			method:"POST",
+			url: "/deletePagibig",
+			data: {id:id},
+			cache:false,
+			success: function(res){
+			  if (res == 'success') {
+              	  Swal({
+		              title: 'Success!',
+		              text: 'Pagibig Contribution Deleted Successfully',
+		              type: 'success',
+		          }).then(function() {
+		              window.location.href =
+		              "http://" +
+		              window.location.host +"/pagibig";
+		          })
+              }else{
+              	Swal({
+		              title: 'warning!',
+		              text: 'Error! Contact the Admin',
+		              type: 'warning',
+		          })
+              }
+            }
+		});
+	}
+	
+</script>
+
+<div class="modal fade text-xs-left" id="addpagibig" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="start_sal" name="start_sal" placeholder="Salary Range Start" required="true">
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="end_sal" name="end_sal" placeholder="Salary Range End" required="true">
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="employer" name="employer" placeholder="Employer Share Percentage" required="true">
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="employee" name="employee" placeholder="Employee Share Percentage" required="true">
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+		<button type="submit" onclick="submit()" class="btn btn-outline-primary">Save changes</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="updatepagibig" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		<input type="hidden" name="rowid" id="rowid">
+	  </div>
+	  <div class="modal-body">
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="Ustart_sal" name="start_sal" placeholder="Salary Range Start" required>
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="Uend_sal" name="end_sal" placeholder="Salary Range End" required>
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="Uemployer" name="employer" placeholder="Employer" required>
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+		<fieldset class="form-group position-relative has-icon-left mb-1">
+			<input type="number" class="form-control" id="Uemployee" name="employee" placeholder="Employee" required>
+			<div class="form-control-position">
+			    <i class="icon-money"></i>
+			</div>
+		</fieldset>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+		<button type="submit" onclick="update()" class="btn btn-outline-primary">Save changes</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="deleteSSS" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+  		<input type="hidden" name="row_del" id="row_del">
+		<p>
+			Are you sure you want to delete Contribution?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-outline-primary" onclick="deleteDetails()">Delete</button>
+	  </div>
+	</div>
+  </div>
+</div>
+<% include ../layout/foot.ejs %>

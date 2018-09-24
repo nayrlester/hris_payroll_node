@@ -1,0 +1,107 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<div class="app-content content container-fluid">
+  <div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">New User Role</h4>
+                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-12">
+                                <form class="form-horizontal form-simple" id="link_form" method="post" action="/" novalidate>
+                                    <div class="card-block">
+                                        <h4 class="card-title">Role Name:</h4>
+                                        <fieldset class="form-group position-relative has-icon-left mb-1">
+                                            <input type="text" class="form-control" id="desc" name="desc" placeholder="Role Name" required>
+                                            <div class="form-control-position">
+                                                <i class="icon-user-plus2"></i>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div class="card-block">
+                                        <h4 class="card-title">Role Management:</h4>
+                                        <% var i=1 %>
+                                        <% data.forEach(function (user) { %>
+                                        <div id="headingCollapse1"  class="card-header">
+                                            <input type="checkbox" value="<%= user.id %>" name="main_link_<%= i++ %>" id="main_link_<%= i++ %>"><a data-toggle="collapse" href="#<%= user.link_title %>" aria-expanded="true" aria-controls="<%= user.link_title %>" class="card-title lead collapsed"> <%= user.link_title %></a>
+                                        </div>
+                                        <div id="<%= user.link_title %>" role="tabpanel" aria-labelledby="headingCollapse1" class="card-collapse" aria-expanded="false">
+                                            <div class="card-body">
+                                                <div class="card-block">
+                                                    <% sub_link.forEach(function (sub) { %>
+                                                        <% if(user.id == sub.sub_link){%>
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item"><input type="checkbox" name="sub_link_<%= i++ %>" id="sub_link_<%= i++ %>" value="<%= sub.id %>"> <%= sub.link_title %></li>
+                                                            </ul>
+                                                        <% } %>
+                                                    <% }) %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }) %>
+                                    </div>
+                                    <div class="card-block">
+                                        <input type="submit" name="submit" value="Submit" class="btn btn-success">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+  </div>
+</div>
+</div>
+<% include ../layout/footer.ejs %>
+
+<script>
+    $(document).ready(function(){
+        $('#link_form').submit(function(e){
+            e.preventDefault();
+            var desc = $('#desc').val();
+            var post_url = '/new_RoleMngt';
+            var flow_url = '/new_FlowMngt';
+            
+            $.post(post_url,{desc:desc}, function( result ) {
+                if (result !=''){
+                    $(":checkbox").each(function () {
+                        var ischecked = $(this).is(":checked");
+                        if (ischecked) {
+                            var data = $(this).val();
+                            $.post(flow_url,{id:result,data:data}, function( result ) {
+
+                            });
+                        }
+                    });
+                   window.location.href='http://localhost:8080/userRole';
+                }
+            });
+        });
+    });
+</script>
+<% include ../layout/foot.ejs %>

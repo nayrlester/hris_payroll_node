@@ -1,0 +1,80 @@
+
+
+    <div class="app-content content container-fluid">
+            <div class="content-wrapper">
+              <div class="content-header row">
+              </div>
+              <div class="content-body">
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title">Employee ATM <button class="btn btn-outline-success" onclick="addAtm()"><i class="icon-plus3"></i></button>
+                                  <a  href="atm-employee-report" class="btn btn-info">Export To Excell</a>
+                                  <a href="#"  id="print" onclick="printData()" class="btn btn-info">Print <i class="fa fa-print"></i></a>
+
+                                </h4>
+                                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                  <div class="heading-elements">
+                                      <ul class="list-inline mb-0">
+                                          <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                          <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                          <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="card-body collapse in">
+                                  <div class="table-responsive" id="print_table">
+                                    <img class="img-responsive" hidden id="company-logo"  style="width:auto!important;height: 50px; " align="right" src="/app-assets/images/logo/logo1.png">
+                                    <style>
+                                    .table_print {
+                                        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                                        border-collapse: collapse;
+                                        width: 100%;
+                                    }
+                                    .table_print td, .table_print th {
+                                        border: 1px solid #ddd;
+                                        padding: 8px;
+                                    }
+                                    .table_print tr:nth-child(even){background-color: #f2f2f2;}
+                                    .table_print tr:hover {background-color: #ddd;}
+                                    .table_print th {
+                                        padding-top: 12px;
+                                        padding-bottom: 12px;
+                                        text-align: left;
+                                        color: white;
+                                    }
+                                    </style>
+                                      <table class="table table-bordered table-striped" id="atmlist">
+                                          <thead class="bg-info">
+                                              <tr>
+                                                  <th>#</th>
+                                                  <th>Name</th>
+                                                  <th>ATM Number</th>
+                                                  <th class="action" >Action</th>
+                                              </tr>
+                                              
+                                          </thead>
+                                          <tbody>
+                                                <% var i = 1; data.forEach(function(row){ %>
+                                                <tr>
+                                                    <td><%- i++ %></td>
+                                                    <td><%- row.full_name %></td>
+                                                    <td><%- row.atm_number %></td>
+                                                    <td class="action" >
+                                                        <button type="button" class="btn btn-outline-info" data-toggle="modal" onclick="updateAtm('<%- row.canditate_id %>')"><i class="icon-edit"></i></button>
+                                                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" onclick="deleteAtm('<%- row.id %>')"><i class="icon-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                                <% }) %>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        

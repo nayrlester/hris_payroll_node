@@ -1,0 +1,52 @@
+
+    <div data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow">
+      <div class="main-menu-header">
+        <input type="text" placeholder="Search" class="menu-search form-control round"/>
+      </div>
+      <div class="main-menu-content">
+        <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
+            
+        </ul>
+      </div>
+    </div>
+    
+     
+
+
+<!-- <div data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow">
+      <div class="main-menu-header">
+        <input type="text" placeholder="Search" class="menu-search form-control round"/>
+      </div>
+      <div class="main-menu-content" id="ulList">
+        
+      </div>
+    </div>
+
+    <script>
+        $(document).on('ready',function(){
+            $('input[name="daterange"]').daterangepicker();
+            function result_menu(){
+                return $.ajax({
+                        type:"get",
+                        url:"/menu" 
+                    });
+            }
+            var data = result_menu();
+            data.success(function(result){
+                var endMenu =getMenu("0");
+                function getMenu( parentID ){
+                    return result.filter(function(node){ return ( node.sub_link === parentID ) ; }).sort(function(a,b){return a.index > b.index}).map(function(node){
+                        var exists = result.some(function(childNode){  return childNode.sub_link === node.id; });
+                        if(node.link_page == null ){
+                        var subMenu = (exists) ? '<ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">'+ getMenu(node.id).join('') + '</ul>' : "";
+                        return '<li class=" nav-item"><a href="#"><i class="'+node.icon+'"></i><span data-i18n="nav.page_layouts.main" class="menu-title">'+node.link_title +  subMenu + '</li>' ;
+                        }else{
+                        var subMenu = (exists) ? '<ul class="menu-content">'+ getMenu(node.id).join('') + '</ul>' : "";
+                        return '<li class=" nav-item"><a href="'+node.link_page+'" class="menu-item"><i class="'+node.icon+'"></i><span data-i18n="nav.page_layouts.main" class="menu-title">'+node.link_title +  subMenu + '</li>' ;
+                        }
+                    });
+                }
+                $('#ulList').html('<ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">'+endMenu.join('')+ '</ul>');
+            });
+        })  
+    </script> -->

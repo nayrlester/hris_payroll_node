@@ -1,0 +1,217 @@
+
+<% include ../../layout/header.ejs %>
+<% include ../../layout/head.ejs %>
+<% include ../../element/menu.ejs %>
+<% include ../../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../../layout/footer.ejs %>
+
+<script>
+	function updateWorkShift(id)
+	{
+	  $('#rowid').val(id);
+	  $('#updateRegModal').modal('show');
+		$('.modal-title').text('Update Work Shift');
+		
+			$.ajax({
+				type:"get",
+				url:"/work_shift_by_id?id="+id,
+				cache:false,
+				success:function(data){
+
+					data.forEach(function(row) { 
+						var WorkShift = JSON.stringify(row.shift_name);
+						var starttime = JSON.stringify(row.shift_from);
+						var endtime = JSON.stringify(row.shift_to);
+
+						$('#WorkShift').val(WorkShift.replace(/\"/g, ""));
+						$('#starttime').val(starttime.replace(/\"/g, ""));
+						$('#endtime').val(endtime.replace(/\"/g, ""));
+					});	
+				}	
+			});
+	} 
+
+	function deleteWorkShift(id)
+	{
+	  $('#rowid_del').val(id);
+	  $('#WorkShiftModal_delete').modal('show');
+	  $('.modal-title').text('Delete Work Shift');
+	} 
+
+	function addWorkShift(){
+
+	  $('#WorkShiftModal_add').modal('show');
+	  $('.modal-title').text('Add Work Shift');
+
+	}
+
+</script>
+
+<div class="modal fade text-xs-left" id="updateRegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/updateWorkShift" novalidate>
+	  	<input type="hidden" name="rowid" id="rowid">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="WorkShift" name="WorkShift" placeholder="Work Shift" required>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="timesheetinput5">Start Time</label>
+							<div class="position-relative has-icon-left">
+								<input type="time" id="starttime" class="form-control" name="starttime" required>
+								<div class="form-control-position">
+									<i class="icon-clock5"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="timesheetinput6">End Time</label>
+							<div class="position-relative has-icon-left">
+								<input type="time" id="endtime" class="form-control" name="endtime" required>
+								<div class="form-control-position">
+									<i class="icon-clock5"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<select class="form-control" id="shift_type" name="shift_type" required>
+					<option selected disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Shift Type</option>
+					<option value="Broken">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Broken</option>
+                    <option value="On-Call">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On-Call</option>
+                    <option value="Part-time">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Part-time</option>
+                    <option value="Regular schedule">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regular schedule</option>
+				</select>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="WorkShiftModal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/addWorkShift" novalidate>
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="WorkShift" name="WorkShift" placeholder="Work Shift" required>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="timesheetinput5">Start Time</label>
+							<div class="position-relative has-icon-left">
+								<input type="time" id="timesheetinput5" class="form-control" name="starttime" required>
+								<div class="form-control-position">
+									<i class="icon-clock5"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="timesheetinput6">End Time</label>
+							<div class="position-relative has-icon-left">
+								<input type="time" id="timesheetinput6" class="form-control" name="endtime" required>
+								<div class="form-control-position">
+									<i class="icon-clock5"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<select class="form-control" id="shift_type" name="shift_type" required>
+					<option selected disabled>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Shift Type</option>
+					<option value="Broken">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Broken</option>
+                    <option value="On-Call">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;On-Call</option>
+                    <option value="Part-time">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Part-time</option>
+                    <option value="Regular schedule">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Regular schedule</option>
+				</select>
+				<div class="form-control-position">
+				    <i class="icon-list"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="WorkShiftModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="deleteWorkShift" method="post" action="/deleteWorkShift" novalidate>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+  		<input type="hidden" name="rowid_del" id="rowid_del">
+		<p>
+			Are you sure you want to delete Work Shift?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-outline-primary">Delete</button>
+	  </div>
+	</div>
+	</form>
+  </div>
+</div>
+<% include ../../layout/foot.ejs %>

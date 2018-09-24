@@ -1,0 +1,74 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Recruitment - Disciplinary Section <button class="btn btn-outline-success" onclick="addDiscipline()"><i class="icon-plus3"></i></button></h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                    <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th>Violation</th>
+                                            <th>Department Assign</th>
+                                            <th>Description</th>
+                                            <th>Offense</th>
+                                            <th>Suspension</th>
+                                            <th>Sanction</th>
+                                            <th>Note</th>
+                                            <th>Decision</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) { %>
+                                        <tr>
+                                            <th scope="row"><%= i++ %></th>
+                                            <td><%= user.emp_id %></td>
+                                            <td><%= user.NAME %></td>
+                                            <td><%= user.violation %></td>
+                                            <td><%= user.department %></td>
+                                            <td><%= user.description %></td>
+                                            <td><%= user.offense %></td>
+                                            <td><%= user.suspension %></td>
+                                            <td><%= user.sanction %></td>
+                                            <td><%= user.required %></td>
+                                            <td><%= user.descision %></td>
+                                            <td><%= dateFormat(user.date_created, "isoDate" ) %></td>
+                                            <td>
+                                            <button type="button" class="btn btn-outline-info" onclick="updateDiscipline('<%= user.id %>')"><i class="icon-edit"></i></button>
+                                            <button type="button" class="btn btn-outline-danger" onclick="deleteDiscipline('<%= user.id %>')"><i class="icon-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

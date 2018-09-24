@@ -1,0 +1,82 @@
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+      <div class="content-header row">
+            <div class="content-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">13 Month Header</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse in">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-xl-12">
+                                                <div class="card-block">
+                                                    <h4 class="card-title">Select Year</h4>
+                                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                        <select class = "form-control" id="date" required>
+                                                            <option value = "">-- Select Year --</option>
+                                                            <% year.forEach(function(rows){ %>
+                                                              <option value = "<%- rows.year %>"><%- rows.year %></option>
+                                                            <% }) %>
+                                                        </select>  
+                                                        <div class="form-control-position">
+                                                            <i class="icon-department"></i>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="card-block">
+                                                        <h4 class="card-title">Select Client</h4>
+                                                        <fieldset class="form-group position-relative has-icon-left mb-1">
+                                                            <select class = "form-control" id="pclient" required>
+                                                                <option value = "">-- Select Client --</option>
+                                                                <% client.forEach(function(rows){ %>
+                                                                  <option value = "<%- rows.id %>"><%- rows.client_name %></option>
+                                                                <% }) %>
+                                                            </select>  
+                                                            <div class="form-control-position">
+                                                                <i class="icon-department"></i>
+                                                            </div>
+                                                        </fieldset>
+                                                    </div>
+                                                    
+                                                <div class="card-block">
+                                                    <div class="table-responsive">
+                                                        <div class="col-sm-12">
+                                                            <button class = "btn btn-success text-right" id = "print">Print</button>
+                                                            <button class = "btn btn-primary text-right" id = "13_month">Search</button>
+                                                        
+                                                        </div> 
+                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="card-block"></div>
+                                                <table class="table" id ="employee" cellspacing="0" width="100%">
+                                                        <thead class="bg-info">
+                                                            <tr>
+                                                                <th>Client Name</th>
+                                                                <th>Total Gross</th>
+                                                    
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+<% include ../layout/foot.ejs %>
+
+<script>
+    function pContribution(vals=""){
+        var value = (vals == "" || vals == "search") ? $('#pclient').val() : vals,
+        pid = $('#clientid').val(),
+        daterange = $("#daterange").val().split('-'),
+        datefrom = daterange[0],
+        dateto   = daterange[1],
+        exportex = 'export',
+        excell = (vals != "") ? "search" : 'export',
+        obj = { value, pid, excell, datefrom, dateto }
+        if(excell == 'export'){
+            var pathname = 'http://localhost:8080/payroll-benifits-search?value='+value+'&pid='+pid+'&excell='+excell+'&datefrom='+datefrom+'&dateto='+dateto
+             window.open(pathname, '_blank');
+        }else{
+            $.get('/payroll-benifits-search', obj, function(obj) {
+                var table = $("#payroll-contribution >tbody"),
+                data = obj.data,
+                download = obj.downloadExcel,
+                totalEmp = 0,
+                totalEmpr = 0,
+                netTotal = 0,
+                totalEmployee = [],
+                totalEmployer = [],
+                totalAll = []
+                table.empty();
+                $('#type').html('<label class="label label-info">Contribution '+value.toUpperCase()+'</label>')
+                if(data != 0){
+                    data.forEach(data => {
+                        totalEmp = totalEmp + data.employee
+                        totalEmpr = totalEmpr + data.employer
+                        netTotal  = netTotal + data.net_total
+                        totalEmployee.push(totalEmp)
+                        totalEmployer.push(totalEmpr)
+                        totalAll.push(netTotal)
+                        table.append('<tr> <td>'+data.lname+'</td><td>'+data.fname+'</td><td>'+data.lname+'</td><td>'+money(data.basic_sal)+'</td><td>'+money(data.employee)+'</td><td>'+money(data.employer)+'</td><td>'+money(data.net_total)+'</td></tr>');
+                        $('#export-to-excell').removeAttr('hidden')
+                        $('#print').removeAttr('hidden')
+                    });
+                    table.append('<tr><td colspan="4"></td><td >'+money(totalEmployee.slice(-1)[0])+'</td><td>'+money(totalEmployer.slice(-1)[0])+'</td><td>'+money(totalAll.slice(-1)[0])+'</td></tr>');
+                }else{ 
+                    // alert('No data available can\'t be exported ')
+                }
+            });
+        }
+    }
+    
+    function printData(){
+        $('#company-logo').removeAttr('hidden')
+        $('#payroll-contribution').removeAttr('class')
+        $('#payroll-contribution').attr('class','table_print')
+        $('#payroll-contribution').attr('align','right')
+        var divToPrint=document.getElementById("print_table");
+        newWin= window.open("","_self");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+        window.location.href = '/payroll-benifits'
+        $('#payroll-contribution').removeAttr('table_print')
+        $('#payroll-contribution').attr('class','table table-bordered table-striped')
+        $('#company-logo').attr('hidden',true)
+    }
+    function money(money) {
+		return accounting.formatMoney(money, "")
+	}
+  
+</script>

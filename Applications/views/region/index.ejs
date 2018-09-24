@@ -1,0 +1,151 @@
+
+<% include ../layout/header.ejs %>
+<% include ../layout/head.ejs %>
+<% include ../element/menu.ejs %>
+<% include ../element/top_nav.ejs %>
+
+
+<div id="overlay">
+<div id="progstat"></div>
+<div id="progress"></div>
+</div>
+
+<div id="container">
+<% include section.ejs %>
+</div>
+
+
+<% include ../layout/footer.ejs %>
+
+<script>
+	function updateRegion(id)
+	{
+	  $('#rowid').val(id);
+	  $('#updateRegModal').modal('show');
+		$('.modal-title').text('Update Region Name');
+		
+			$.ajax({
+				type:"get",
+				url:"/region_by_id?id="+id,
+				cache:false,
+				success:function(data){
+
+					data.forEach(function(row) { 
+						var reg_code = JSON.stringify(row.region_code);
+						var desc = JSON.stringify(row.description);
+
+						$('#reg_code').val(reg_code.replace(/\"/g, ""));
+						$('#desc').val(desc.replace(/\"/g, ""));
+					});	
+				}	
+			});
+	} 
+
+	function deleteRegion(id)
+	{
+	  $('#rowid_del').val(id);
+	  $('#RegionModal_delete').modal('show');
+	  $('.modal-title').text('Delete Region Name');
+	} 
+
+	function addRegion(){
+
+	  $('#RegionModal_add').modal('show');
+	  $('.modal-title').text('Add Region');
+
+	}
+
+</script>
+
+<div class="modal fade text-xs-left" id="updateRegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/updateRegion" novalidate>
+	  	<input type="hidden" name="rowid" id="rowid">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="reg_code" name="reg_code" placeholder="Region Code" required>
+				<div class="form-control-position">
+				    <i class="icon-head"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="desc" name="desc" placeholder="Description" required>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="RegionModal_add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" method="post" action="/addRegion" novalidate>
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+			<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+		  </div>
+		  <div class="modal-body">
+			 <fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="reg_code" name="reg_code" placeholder="Region Code" required>
+				<div class="form-control-position">
+				    <i class="icon-head"></i>
+				</div>
+			</fieldset>
+			<fieldset class="form-group position-relative has-icon-left mb-1">
+				<input type="text" class="form-control" id="desc" name="desc" placeholder="Description" required>
+				<div class="form-control-position">
+				    <i class="icon-mail6"></i>
+				</div>
+			</fieldset>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-outline-primary">Save changes</button>
+		  </div>
+		</div>
+	</form>
+  </div>
+</div>
+
+<div class="modal fade text-xs-left" id="RegionModal_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+  	<form class="form-horizontal form-simple" id="deleteRegion" method="post" action="/deleteRegion" novalidate>
+	<div class="modal-content">
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button>
+		<h4 class="modal-title" id="myModalLabel2"><i class="icon-road2"></i> </h4>
+	  </div>
+	  <div class="modal-body">
+  		<input type="hidden" name="rowid_del" id="rowid_del">
+		<p>
+			Are you sure you want to delete Region?
+		</p>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancel</button>
+		<button type="submit" class="btn btn-outline-primary">Delete</button>
+	  </div>
+	</div>
+	</form>
+  </div>
+</div>
+<% include ../layout/foot.ejs %>

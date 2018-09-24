@@ -1,0 +1,102 @@
+
+
+    <div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item ">
+                                    <a href="/org_client/<%= data_id %>" class="nav-link">Organization - Client - Details</a>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">
+                                            <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                            <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/wage_settings/<%= data_id %>" class="nav-link active">Wage Settings 
+                                    </a>                                                                                            
+                                </li>
+                            </ul>
+                            
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-header" align="right">
+                                <button class="btn btn-outline-success" onclick="addWageSettings('<%= data_id %>')"><i class="icon-plus3"></i> Wage Settings</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="bg-info">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Job Title</th>
+                                            <th>Rate</th>
+                                            <th>Cola</th>
+                                            <th>SEA</th>
+                                            <th>CTPA</th>
+                                            <th>OT</th>
+                                            <th>ND</th>
+                                            <th>OT - ND</th>
+                                            <th>LH Rate</th>
+                                            <th>LH OT</th>
+                                            <th>LH ND</th>
+                                            <th>LH OT-ND</th>
+                                            <th>SH Rate</th>
+                                            <th>SH OT</th>
+                                            <th>SH ND</th>
+                                            <th>SH OT-ND</th>
+                                            <th>Rest Day</th>
+                                            <th>LH RDOT</th>
+                                            <th>SH RDOT</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% var i = 1 ;%>
+                                        <% data.forEach(function (user) { %>
+                                            <tr>
+                                                <th scope="row"><%= i++ %></th>
+                                                <td><%= user.job_title %></td>
+                                                <td><%= user.rate.toFixed(2) %></td>
+                                                <td><%= user.cola.toFixed(2)%></td>
+                                                <td><%= user.sea.toFixed(2) %></td>
+                                                <td><%= user.ctpa.toFixed(2) %></td>
+                                                <td><%= user.ot.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.ot_nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.lh_rate.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.lh_ot.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.lh_nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.lh_ot_nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.sh_rate.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.sh_ot.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.sh_nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.sh_ot_nd.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.day_off.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.lh_rdot.toFixed(2) * 100 %>%</td>
+                                                <td><%= user.sh_rdot.toFixed(2) * 100 %>%</td>
+                                                <td>
+                                                <button type="button" class="btn btn-outline-info" onclick="updateWage('<%= user.id %>')"><i class="icon-edit"></i></button>
+                                                <button type="button" class="btn btn-outline-danger" onclick="deleteWage('<%= user.id %>')"><i class="icon-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    </tbody>    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  

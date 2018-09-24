@@ -1,0 +1,90 @@
+
+
+    <div class="app-content content container-fluid">
+        <div class="content-wrapper">
+          <div class="content-header row">
+          </div>
+          <div class="content-body">
+              <div class="row">
+                  <div class="col-xs-12">
+                      <div class="card">
+                            <div class="card-block">
+                                    <h4 class="card-title">Select Client</h4>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <select class = "form-control" onchange="payrollRateList(this.value)" id="pclient" onchange="pContribution(this.value)" required>
+                                                <option value = "">-- Select Client --</option>
+                                            <% client_list.forEach(function(row){ %>
+                                                <option value = "<%- row.id %> "><%- row.client_name %></option>
+                                            <% }) %>
+                                        </select>  
+                                        <div class="form-control-position">
+                                            <i class="icon-department"></i>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                          <div class="card-header">
+                                    
+                              <h4 class="card-title">Payroll Rate <a  href="/payroll-payrollRateExport" class="btn btn-info">Export To Excell</a>
+                                <a href="#"  id="print" onclick="printData()" class="btn btn-info">Print <i class="fa fa-print"></i></a></h4>
+                              <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                              
+                              <div class="heading-elements">
+                                  <ul class="list-inline mb-0">
+                                      <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                      <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                      <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="card-body collapse in">
+                              <div class="table-responsive" id="print_table">
+                                    <img class="img-responsive" hidden id="company-logo"  style="width:auto!important;height: 50px; " align="right" src="/app-assets/images/logo/logo1.png">
+                                    <style>
+                                    .table_print {
+                                        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                                        border-collapse: collapse;
+                                        width: 100%;
+                                    }
+                                    .table_print td, .table_print th {
+                                        border: 1px solid #ddd;
+                                        padding: 8px;
+                                    }
+                                    .table_print tr:nth-child(even){background-color: #f2f2f2;}
+                                    .table_print tr:hover {background-color: #ddd;}
+                                    .table_print th {
+                                        padding-top: 12px;
+                                        padding-bottom: 12px;
+                                        text-align: left;
+                                        color: white;
+                                    }
+                                    </style>
+                                  <table class="table table-bordered table-striped" style="width:100%" id="payrollrate">
+                                      <thead class="bg-info">
+                                          <tr>
+                                              <th>Job Description</th>
+                                              <th>Daily Rate</th>
+                                              <th>Cola</th>
+                                              <th>SEA</th>
+                                              <th>CTPA</th>
+                                              <th>Reg OT Rate</th>
+                                              <th>Nigth Diff Rate</th>
+                                              <!-- <th>Legal Holiday Rate</th> -->
+                                              <!-- <th>Legal Holiday OT Rate</th>
+                                              <th>Legal Holiday ND Rate</th>
+                                              <th>Special Holiday Rate</th>
+                                              <th>Special Holiday OT Rate</th> -->
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    
